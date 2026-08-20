@@ -1,0 +1,675 @@
+<title>Rome to Cefalù</title>
+<style>
+  :root{
+    --bg:#F4F6F6; --card:#FFFFFF; --ink:#1C2B36; --muted:#5B6E7A;
+    --sea:#0F6E8C; --sea-soft:#E3EEF2; --lemon:#B45E12; --lemon-soft:#FBEFDF;
+    --good:#2E7D5B; --good-soft:#E4F1EA; --warn:#A6461C; --warn-soft:#F9E9E1;
+    --line:#D9E2E6; --chip:#EAF0F2; --price:#0F6E8C;
+    --shadow:0 1px 3px rgba(28,43,54,.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F181E; --card:#17242C; --ink:#E6EDF0; --muted:#95A8B2;
+      --sea:#5FB6D6; --sea-soft:#132E3A; --lemon:#E2A557; --lemon-soft:#33261438;
+      --good:#6CC29C; --good-soft:#14302484; --warn:#E59877; --warn-soft:#38201566;
+      --line:#26343D; --chip:#1E2E37; --price:#5FB6D6;
+      --shadow:0 1px 3px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F181E; --card:#17242C; --ink:#E6EDF0; --muted:#95A8B2;
+    --sea:#5FB6D6; --sea-soft:#132E3A; --lemon:#E2A557; --lemon-soft:#33261438;
+    --good:#6CC29C; --good-soft:#14302484; --warn:#E59877; --warn-soft:#38201566;
+    --line:#26343D; --chip:#1E2E37; --price:#5FB6D6;
+    --shadow:0 1px 3px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:680px; margin:0 auto; padding:0 14px 80px}
+  .serif{font-family:Palatino,"Palatino Linotype","Book Antiqua",Georgia,serif}
+
+  /* masthead */
+  header.mast{padding:26px 2px 10px}
+  .mast .kicker{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--sea); font-weight:600}
+  .mast h1{margin:.15em 0 .1em; font-size:clamp(30px,9vw,40px); line-height:1.05; text-wrap:balance; font-weight:700}
+  .mast .sub{color:var(--muted); font-size:14.5px; margin:0}
+
+  /* nav */
+  nav.jump{
+    position:sticky; top:0; z-index:50; background:var(--bg);
+    margin:12px -14px 18px; padding:10px 14px; border-bottom:1px solid var(--line);
+    overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  nav.jump::-webkit-scrollbar{display:none}
+  nav.jump a{
+    display:inline-block; margin-right:8px; padding:7px 13px; border-radius:999px;
+    background:var(--chip); color:var(--ink); text-decoration:none; font-size:13.5px; font-weight:600;
+  }
+  nav.jump a.hot{background:var(--sea); color:#fff}
+
+  /* generic blocks */
+  section{margin:0 0 30px; scroll-margin-top:64px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:var(--shadow); margin-bottom:12px}
+  h2.sect{
+    font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--sea);
+    margin:34px 0 10px; font-weight:700;
+  }
+  .stophead{display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; margin:0 0 10px}
+  .stophead h3{margin:0; font-size:26px; font-weight:700}
+  .dates{font-size:13px; font-weight:700; color:var(--lemon); background:var(--lemon-soft); border-radius:999px; padding:4px 12px; white-space:nowrap}
+  .lede{color:var(--muted); font-size:14.5px; margin:2px 0 12px}
+
+  /* route steps */
+  .route{border-left:3px solid var(--sea); padding-left:12px; margin:8px 0}
+  .route .leg{margin:0 0 10px}
+  .route .leg b{display:block; font-size:15px}
+  .route .leg span{color:var(--muted); font-size:13.5px}
+
+  /* price chip */
+  .pr{font-weight:700; color:var(--price); font-variant-numeric:tabular-nums; white-space:nowrap}
+  .aud{color:var(--muted); font-weight:400; font-size:.86em; white-space:nowrap}
+
+  /* alerts */
+  .alert{border-radius:12px; padding:12px 14px; font-size:14.5px; margin:0 0 12px; border:1px solid transparent}
+  .alert b{display:block; margin-bottom:2px}
+  .alert.warn{background:var(--warn-soft); color:var(--ink); border-color:var(--warn)}
+  .alert.go{background:var(--good-soft); color:var(--ink); border-color:var(--good)}
+  .alert.info{background:var(--sea-soft); color:var(--ink); border-color:var(--sea)}
+
+  /* details accordions */
+  details{border:1px solid var(--line); border-radius:12px; background:var(--card); margin-bottom:10px; overflow:hidden}
+  details summary{
+    cursor:pointer; padding:12px 14px; font-weight:700; font-size:15.5px; list-style:none;
+    display:flex; justify-content:space-between; align-items:center; gap:8px;
+  }
+  details summary::-webkit-details-marker{display:none}
+  details summary::after{content:"+"; color:var(--sea); font-size:19px; font-weight:600; flex:none}
+  details[open] summary::after{content:"–"}
+  details .inner{padding:0 14px 13px; border-top:1px solid var(--line); padding-top:11px; font-size:14.5px}
+  details summary:focus-visible{outline:2px solid var(--sea); outline-offset:-2px; border-radius:12px}
+
+  /* lists */
+  ul.tick{margin:6px 0; padding-left:2px; list-style:none}
+  ul.tick li{padding:4px 0 4px 24px; position:relative}
+  ul.tick li::before{content:"›"; position:absolute; left:8px; color:var(--sea); font-weight:700}
+  .kv{width:100%; border-collapse:collapse; font-size:14px}
+  .kv td{padding:7px 8px 7px 0; border-bottom:1px solid var(--line); vertical-align:top}
+  .kv tr:last-child td{border-bottom:none}
+  .kv td:last-child{text-align:right}
+  .tblwrap{overflow-x:auto}
+  table.grid{border-collapse:collapse; width:100%; font-size:13.5px; min-width:430px}
+  table.grid th{ text-align:left; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:6px 8px; border-bottom:2px solid var(--line)}
+  table.grid td{padding:7px 8px; border-bottom:1px solid var(--line); vertical-align:top}
+  .num{font-variant-numeric:tabular-nums}
+
+  .eat b, .stay b{display:block}
+  .eat li, .stay li{padding:6px 0; border-bottom:1px dashed var(--line)}
+  .eat li:last-child, .stay li:last-child{border-bottom:none}
+  .eat ul, .stay ul{list-style:none; margin:4px 0 0; padding:0; font-size:14.5px}
+  .eat span, .stay span{color:var(--muted); font-size:13.5px}
+
+  .foot{color:var(--muted); font-size:12.5px; margin-top:36px; border-top:1px solid var(--line); padding-top:14px}
+  a{color:var(--sea)}
+  .big{font-size:19px; font-weight:700}
+</style>
+
+<div class="wrap">
+<header class="mast">
+  <div class="kicker">Italy · 12 Oct – 1 Nov 2026</div>
+  <h1 class="serif">Rome to Cefalù</h1>
+  <p class="sub">Your whole trip in one page — bookings, prices, routes, beds, food. Prices in € with <span class="aud">A$ ≈ €×1.7</span>. Save this page for offline.</p>
+</header>
+
+<nav class="jump">
+  <a href="#plan" class="hot">Plan</a>
+  <a href="#book">Book&nbsp;list</a>
+  <a href="#rome">Rome</a>
+  <a href="#sorrento">Sorrento</a>
+  <a href="#positano">Positano</a>
+  <a href="#capri">Capri</a>
+  <a href="#tropea">Tropea</a>
+  <a href="#cefalu">Cefalù</a>
+  <a href="#home">Fly&nbsp;home</a>
+  <a href="#money">Money</a>
+  <a href="#phone">Phone</a>
+  <a href="#safety">Safety</a>
+  <a href="#pack">Pack</a>
+  <a href="#budget">Budget</a>
+</nav>
+
+<!-- ============ PLAN ============ -->
+<section id="plan">
+  <h2 class="sect">The plan at a glance</h2>
+
+  <div class="alert warn">
+    <b>⚠ Two route fixes to your draft</b>
+    There is <b style="display:inline">no ferry Capri→Calabria</b> and <b style="display:inline">no ferry Calabria→Cefalù</b>. Real routes: Capri→Naples by ferry then train south (22 Oct), and train via Villa San Giovanni — your carriage rides the ferry across the Strait of Messina (25 Oct). Details in each stop below.
+  </div>
+
+  <div class="card tblwrap">
+    <table class="grid">
+      <tr><th>Dates</th><th>Place</th><th>Nights</th><th>Vibe</th></tr>
+      <tr><td class="num">mid-Sept–12 Oct</td><td><b>Greece leg</b> — already sorted ✓</td><td class="num">—</td><td>Sun + ruins</td></tr>
+      <tr><td class="num">12–16 Oct</td><td><b>Rome</b></td><td class="num">4</td><td>History blitz</td></tr>
+      <tr><td class="num">16–18 Oct</td><td><b>Sorrento</b> (+ Pompeii, Naples)</td><td class="num">2</td><td>Coast + ruins</td></tr>
+      <tr><td class="num">18–20 Oct</td><td><b>Positano</b></td><td class="num">2</td><td>Cliff village</td></tr>
+      <tr><td class="num">20–22 Oct</td><td><b>Capri</b></td><td class="num">2</td><td>Island</td></tr>
+      <tr><td class="num">22–25 Oct</td><td><b>Tropea</b> (Calabria)</td><td class="num">3</td><td>Slow beaches</td></tr>
+      <tr><td class="num">25–29 Oct</td><td><b>Cefalù</b> (+ Palermo)</td><td class="num">4</td><td>Wind-down</td></tr>
+      <tr><td class="num">29/30 Oct</td><td><b>Back to Rome</b></td><td class="num">2</td><td>Buffer</td></tr>
+      <tr><td class="num">1 Nov</td><td><b>Fly home</b> from Rome FCO</td><td class="num">—</td><td>All Saints' Day</td></tr>
+    </table>
+  </div>
+
+  <div class="alert go">
+    <b>✓ Weather picture</b>
+    Rome mid-Oct: 20–23°C days, some short showers. South coast late Oct: 19–23°C, sea 21–22°C (swimmable on calm days). Clocks go back <b style="display:inline">Sun 25 Oct</b> → sunsets ~5–6pm in Sicily: do sights in the morning.
+  </div>
+</section>
+
+<!-- ============ BOOKING LIST ============ -->
+<section id="book">
+  <h2 class="sect">What to book &amp; when</h2>
+
+  <details open>
+    <summary>🔴 Book NOW (late August)</summary>
+    <div class="inner">
+      <ul class="tick">
+        <li><b>All hotels</b> — especially Positano &amp; Capri (few budget rooms, some close for winter — confirm they're open your dates) and the <b>31 Oct Rome night</b> (All Saints' weekend spike).</li>
+        <li><b>Vatican Museums</b> — museivaticani.va, <span class="pr">€25</span> <span class="aud">A$43</span>. 60-day window for your dates is already open. Closed Sundays.</li>
+        <li><b>Borghese Gallery</b> — tosc.it, <span class="pr">€18</span>. Timed slots, no walk-ups, closed Mondays.</li>
+        <li><b>Rome→Naples train 16 Oct</b> — trenitalia.com / italotreno.com. Super Economy from <span class="pr">€9–19</span> now; walk-up is €40–55.</li>
+        <li><b>Naples→Lamezia Terme train 22 Oct</b> — advance fares <span class="pr">€20–45</span>.</li>
+        <li><b>Palermo→Rome flight 30 Oct</b> — Ryanair/Wizz/ITA, ~18/day, from <span class="pr">€25–60</span> now. (Or the Cefalù 21:23 sleeper train, €45–90.)</li>
+        <li><b>Travel insurance</b> — comprehensive 7-week Europe cover ≈ <span class="aud">A$350–700</span> (Fast Cover, Cover-More…). Medicare deal with Italy does NOT cover medicines/tests.</li>
+        <li><b>eSIM</b> — Airalo "Eurolink" 50GB/90-days ≈ <span class="aud">A$148</span>, one plan for Greece+Italy. Install before flying.</li>
+        <li><b>Cards</b> — order Up Bank (free o/s ATMs) + Wise as backup. Takes 1–2 weeks.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🟠 September</summary>
+    <div class="inner">
+      <ul class="tick">
+        <li><b>Colosseum — set an alarm: 12 Sept, 9:00am Italy (5pm AEST)</b>. Tickets release exactly 30 days ahead on ticketing.colosseo.it, <span class="pr">€18</span> (Full Experience €24). Morning slots go within hours.</li>
+        <li><b>Pompeii</b> — pompeiisites.org → Vivaticket, <span class="pr">€20</span>. Named ticket — must match your passport. Book by late Sept for a morning slot on 17 Oct.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🟡 1–2 weeks before each leg</summary>
+    <div class="inner">
+      <ul class="tick">
+        <li><b>Ferries</b> on ferryhopper.com: Sorrento→Positano (18 Oct), Positano→Capri (20 Oct), Capri→Naples (22 Oct). Late-Oct timetables thin out — re-check 1–2 days before each sailing.</li>
+        <li><b>Re-verify IC 723</b> (Villa San Giovanni 14:25 → Cefalù 18:24) — winter timetable can shift times slightly.</li>
+        <li>Message each hotel to confirm check-in time.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🟢 Buy on the day</summary>
+    <div class="inner">
+      <ul class="tick">
+        <li>SITA buses (tabacchi shops, NOT on board), Circumvesuviana, regional trains (Trenitalia app) — <b>validate paper tickets or it's a €100 fine</b>.</li>
+        <li>Blue Grotto (€19 at the cave — no pre-booking), Monte Solaro, La Rocca, Trevi (€2, free after 10pm).</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ============ ROME ============ -->
+<section id="rome">
+  <div class="stophead"><h3 class="serif">Rome</h3><span class="dates">12–16 Oct · 4 nights</span></div>
+  <p class="lede">Mon–Fri stay = thinner crowds. Nearly everything is walkable; metro single €1.50 (poss. €2). City tax €4–6/person/night, usually cash.</p>
+
+  <details open>
+    <summary>See &amp; do — prices + booking</summary>
+    <div class="inner">
+      <table class="kv">
+        <tr><td><b>Colosseum + Forum + Palatine</b> — ticketing.colosseo.it, releases 30 days out 9am (⏰ 12 Sept). 8:30am or last slot; skip 10–2 crush</td><td><span class="pr">€18</span> <span class="aud">A$31</span></td></tr>
+        <tr><td><b>Vatican Museums + Sistine</b> — museivaticani.va, book NOW. Closed Sun. Go Tue/Thu</td><td><span class="pr">€25</span> <span class="aud">A$43</span></td></tr>
+        <tr><td><b>St Peter's Basilica</b> — free; queue shortest before 8am. Dome climb €10 stairs / €15 lift. Knees+shoulders covered</td><td><span class="pr">free</span></td></tr>
+        <tr><td><b>Pantheon</b> — buy at door or museiitaliani.it</td><td><span class="pr">€7</span></td></tr>
+        <tr><td><b>Borghese Gallery</b> — tosc.it, timed 2h slots, closed Mon, book weeks ahead</td><td><span class="pr">€18</span></td></tr>
+        <tr><td><b>Trevi Fountain</b> — €2 daytime entry to the basin, <b>free after 10pm</b> (and gorgeous lit up)</td><td><span class="pr">€2/0</span></td></tr>
+        <tr><td><b>Catacombs</b> — San Callisto (closed Wed) or San Sebastiano, guided tour incl. Bus 118</td><td><span class="pr">€10</span></td></tr>
+        <tr><td><b>Paul's churches</b> — San Paolo Fuori le Mura (metro B); San Luigi dei Francesi (3 Caravaggios — closed 12:45–14:30); Santa Maria sopra Minerva — all free, go mornings</td><td><span class="pr">free</span></td></tr>
+      </table>
+      <p style="margin:10px 0 0"><b>Suggested days:</b> ① Colosseum→Forum→Palatine + Monti · ② Vatican early → St Peter's → Pizzarium lunch · ③ Pantheon + churches + Borghese, Trevi at night · ④ San Paolo + catacombs, wander Trastevere.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Sleep — ~€70–95/night</summary>
+    <div class="inner stay">
+      <ul>
+        <li><b>Hotel Nardizzi Americana</b> 3★ <span class="pr">€73–95</span><span> — Via Firenze, rooftop terrace, between Termini &amp; Trevi. Top pick.</span></li>
+        <li><b>Hotel Sonya</b> 3★ <span class="pr">€83–110</span><span> — opposite the Opera, 2 min Termini.</span></li>
+        <li><b>Blue Hostel</b> (boutique B&amp;B) <span class="pr">€90–110</span><span> — Monti, 17th-c. building.</span></li>
+        <li><b>The Beehive</b> <span class="pr">€45–80</span><span> — beloved cheap guesthouse near Termini; dorms from €22.</span></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Eat — Roman cheap eats</summary>
+    <div class="inner eat">
+      <ul>
+        <li><b>Supplizio</b> <span class="pr">€3–4</span><span> — Rome's best supplì (fried rice balls), nr Campo de' Fiori.</span></li>
+        <li><b>Trapizzino</b> (Testaccio / Trastevere) <span class="pr">€4–5</span><span> — pizza-pocket of Roman stews.</span></li>
+        <li><b>Pizzarium Bonci</b> <span class="pr">€5–7</span><span> — legendary pizza al taglio, 5 min from Vatican Museums.</span></li>
+        <li><b>Da Enzo al 29</b> (Trastevere) <span class="pr">€10–14</span><span> — benchmark carbonara/cacio e pepe. Queue before 7pm.</span></li>
+        <li><b>Otaleg</b> / <b>Giolitti</b> <span class="pr">€3–5</span><span> — gelato. Espresso standing at any bar €1.20–1.50.</span></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Getting in/around</summary>
+    <div class="inner">
+      <div class="route">
+        <p class="leg"><b>FCO airport → city: Leonardo Express <span class="pr">€14</span></b><span>32 min nonstop to Termini, every 15 min. Bus alt €5–7. Taxi flat rate €55 — white cars marked "Roma Capitale" only.</span></p>
+        <p class="leg"><b>16 Oct → Naples: Frecciarossa/Italo <span class="pr">€9–19 booked now</span></b><span>1h10. Then Circumvesuviana (€5, 70 min, watch bags) or Campania Express (€15, seat + luggage space) to Sorrento. From the airport instead: Curreri bus direct to Sorrento €10.</span></p>
+      </div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ SORRENTO ============ -->
+<section id="sorrento">
+  <div class="stophead"><h3 class="serif">Sorrento</h3><span class="dates">16–18 Oct · 2 nights</span></div>
+  <p class="lede">Your base for Pompeii + Naples, both on the same train line. Day 1: arrive, wander, sunset at Marina Grande. Day 2: Pompeii early, Naples afternoon.</p>
+
+  <details open>
+    <summary>Pompeii — the big one</summary>
+    <div class="inner">
+      <table class="kv">
+        <tr><td><b>Entry ("Pompeii Express")</b> — book pompeiisites.org → Vivaticket. <b>Named ticket: carry your passport.</b> Timed slots, 20k/day cap — book a 9am slot by late Sept</td><td><span class="pr">€20</span> <span class="aud">A$34</span></td></tr>
+        <tr><td>Official 1.5h guided tour €8 · audio guide ~€8–10</td><td><span class="pr">+€8</span></td></tr>
+        <tr><td>Train: Circumvesuviana to "Pompei Scavi – Villa dei Misteri", ~30 min. Station is 100 m from the gate</td><td><span class="pr">~€3</span></td></tr>
+      </table>
+      <p style="margin:8px 0 0">Hours Oct: 9:00–19:30, last entry 17:30. Allow 4–6 h, little shade, stone streets — real shoes, hat, water (free fountain refills inside). Bags &gt; 30×30×15 cm go to the cloakroom.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Naples half-day</summary>
+    <div class="inner">
+      <ul class="tick">
+        <li>Train Sorrento→Napoli Garibaldi <span class="pr">€5</span>, ~70 min.</li>
+        <li>Walk <b>Spaccanapoli</b> + Via dei Tribunali (free), San Gregorio Armeno craft street, free Duomo.</li>
+        <li><b>MANN archaeological museum</b> <span class="pr">€20</span> — the real Pompeii mosaics live here. Closed Tuesdays.</li>
+        <li>Watch bags around Garibaldi station; phone off the platform edge.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Sleep — ~€80/night</summary>
+    <div class="inner stay">
+      <ul>
+        <li><b>Hotel Savoia</b> 3★ <span class="pr">~€80</span><span> — 150 m from Piazza Tasso. Top pick.</span></li>
+        <li><b>Hotel Mignon Meublé</b> 3★ <span class="pr">~€80</span><span> — historic centre, 5 min to station.</span></li>
+        <li><b>Hotel Del Corso</b> 3★ <span class="pr">€85–110</span><span> — 100 m from station, ideal for train days.</span></li>
+        <li><b>Budget:</b> Ulisse Deluxe Hostel <span class="pr">€25–30 dorm</span><span> · or stay 1 stop away in Sant'Agnello — same line, ~20% cheaper.</span></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Eat</summary>
+    <div class="inner eat">
+      <ul>
+        <li><b>Trattoria da Emilia</b> (Marina Grande) <span class="pr">€10–14</span><span> — the gnocchi alla sorrentina.</span></li>
+        <li><b>I Giardini di Cataldo</b> <span class="pr">free tasting</span><span> — limoncello in a working lemon grove.</span></li>
+        <li><b>In Naples:</b> Da Michele margherita <span class="pr">€6.50</span> · Sorbillo <span class="pr">€5.50</span> · hot sfogliatella at Attanasio (2 min from the station) <span class="pr">€2</span> · fried cuoppo cone <span class="pr">€4–6</span>.</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ============ POSITANO ============ -->
+<section id="positano">
+  <div class="stophead"><h3 class="serif">Positano</h3><span class="dates">18–20 Oct · 2 nights</span></div>
+  <p class="lede">The postcard. Also the priciest bed of the trip — Praiano (25 min bus) is the budget escape hatch.</p>
+
+  <details open>
+    <summary>Getting there — 18 Oct</summary>
+    <div class="inner">
+      <div class="route">
+        <p class="leg"><b>Ferry Sorrento→Positano <span class="pr">€16–21.50</span></b><span>30–40 min. Still running mid-Oct; big-bag supplement. Book ~1 week out on Ferryhopper. Worth it with luggage —</span></p>
+        <p class="leg"><b>— because the bus (SITA, <span class="pr">€2.60</span>)</b><span> stops high above town: hundreds of stairs down with bags. Tickets from tabacchi, not on board.</span></p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>Do — mostly free</summary>
+    <div class="inner">
+      <ul class="tick">
+        <li><b>Path of the Gods hike</b> — free, ~3 h Bomerano→Nocelle, sea views the whole way. Bus to Amalfi (€2.60) + bus to Bomerano (~€2). Walk east→west = downhill. Start early; sunset ~6:15pm.</li>
+        <li><b>Fornillo beach</b> — 10-min coastal path, quieter + free.</li>
+        <li>Santa Maria Assunta (free, the dome from the postcards), Via dei Mulini wander, sunset from the upper town.</li>
+        <li>Sea ~22°C — swim if it's sunny.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Sleep — the honest version</summary>
+    <div class="inner stay">
+      <ul>
+        <li><b>Hostel Brikette</b> <span class="pr">private ~€98 / dorm €45–70</span><span> — the only true budget bed in Positano; terrace views. Hostelworld.</span></li>
+        <li><b>Pensione Maria Luisa</b> (Fornillo) <span class="pr">€110–140 direct</span><span> — sea-view balconies; the worthwhile splurge.</span></li>
+        <li><b>Praiano instead</b> <span class="pr">€80–120</span><span> — Casa Colomba, Maresca, Hotel La Perla; 25 min bus, quiet nights.</span></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Eat</summary>
+    <div class="inner eat">
+      <ul>
+        <li><b>Delicatessen</b> (Via dei Mulini) <span class="pr">€5–7</span><span> — made-to-order panini; cheapest feed in town.</span></li>
+        <li><b>Vini e Panini</b> (by the Duomo) <span class="pr">~€7</span><span> — panino + cheap wine.</span></li>
+        <li><b>C'era Una Volta</b> (upper town) <span class="pr">€8–15</span><span> — the locals' trattoria.</span></li>
+        <li>Lemon granita by the beach <span class="pr">€3–5</span>.</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ============ CAPRI ============ -->
+<section id="capri">
+  <div class="stophead"><h3 class="serif">Capri</h3><span class="dates">20–22 Oct · 2 nights</span></div>
+  <p class="lede">Late Oct = the island exhales: 30–40% of summer crowds, low-season prices. Stay in Anacapri (cheaper, lovelier). Confirm your hotel is open — some shut for winter.</p>
+
+  <details open>
+    <summary>Getting there — 20 Oct (the fragile link)</summary>
+    <div class="inner">
+      <div class="route">
+        <p class="leg"><b>Hydrofoil Positano→Capri <span class="pr">€27.50–29</span></b><span>40–50 min, a few sailings/day late Oct. Re-check timetable 1–2 days out; first boats cancelled in swell.</span></p>
+        <p class="leg"><b>Plan B if seas are rough</b><span>Bus Positano→Sorrento (€2.60) + year-round Sorrento→Capri ferry (€18–23). ~3 h total. Don't book anything non-refundable that morning.</span></p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>Do</summary>
+    <div class="inner">
+      <table class="kv">
+        <tr><td><b>Blue Grotto</b> — go the CHEAP way: bus from Anacapri (€2.40) + stairs, pay at the cave. ~50/50 open in late Oct — <b>try your first morning</b>, day 2 is the retry</td><td><span class="pr">€19</span></td></tr>
+        <tr><td><b>Monte Solaro chairlift</b> — 13 min up, hike down free</td><td><span class="pr">€15 rtn</span></td></tr>
+        <tr><td><b>Gardens of Augustus</b> — the Faraglioni view</td><td><span class="pr">€2.50</span></td></tr>
+        <tr><td>Funicular Marina Grande→Capri town</td><td><span class="pr">€2.40</span></td></tr>
+        <tr><td>Free: Arco Naturale walk, Anacapri lanes, Marina Piccola, Migliara viewpoint</td><td><span class="pr">free</span></td></tr>
+      </table>
+    </div>
+  </details>
+
+  <details>
+    <summary>Sleep — Anacapri ~€60–130</summary>
+    <div class="inner stay">
+      <ul>
+        <li><b>Hotel Bussola di Hermes</b> (Anacapri) <span class="pr">€60–100</span><span> — 20-min walk to the Blue Grotto. Top value.</span></li>
+        <li><b>Villa Eva</b> (Anacapri) <span class="pr">€90–130</span><span> — gardens + pool, classic budget pick.</span></li>
+        <li><b>Da Giorgio</b> (Capri town) <span class="pr">€100–145</span><span> — if you'd rather be 5 min from the Piazzetta.</span></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Eat</summary>
+    <div class="inner eat">
+      <ul>
+        <li><b>Capri Pasta</b> (off Via Roma) <span class="pr">few €</span><span> — takeaway ravioli capresi; cheapest real meal on the island.</span></li>
+        <li><b>Verginiello</b> <span class="pr">pizza+beer €20–25</span><span> — open year-round, best price/quality.</span></li>
+        <li><b>Aumm Aumm</b> / <b>Il Buco</b> (Anacapri) <span class="pr">pizza €8–12</span><span> — eat in Anacapri, dodge Piazzetta prices.</span></li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ============ TROPEA ============ -->
+<section id="tropea">
+  <div class="stophead"><h3 class="serif">Tropea</h3><span class="dates">22–25 Oct · 3 nights</span></div>
+  <p class="lede">Calabria's clifftop stunner — cheaper, realer, quieter. Tropea beats Scilla as the base (more open off-season, better trains); see Scilla as a day trip.</p>
+
+  <details open>
+    <summary>Getting there — 22 Oct (big travel day, ~7 h)</summary>
+    <div class="inner">
+      <div class="route">
+        <p class="leg"><b>1 · Ferry Capri→Naples <span class="pr">€25.50–28.50</span></b><span>~50 min to Molo Beverello, every 30–60 min all morning.</span></p>
+        <p class="leg"><b>2 · Metro L1 Municipio→Garibaldi <span class="pr">€1.50</span></b><span>or 10-min taxi to Napoli Centrale.</span></p>
+        <p class="leg"><b>3 · Train Naples→Lamezia Terme <span class="pr">€20–45 adv</span></b><span>Frecciarossa ~3 h / InterCity ~3.5–4 h. Book now.</span></p>
+        <p class="leg"><b>4 · Regionale Lamezia→Tropea <span class="pr">€5.30</span></b><span>~1 h, ~9/day, buy day-of in the Trenitalia app. (The direct Naples–Tropea train is summer-only.)</span></p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>Do</summary>
+    <div class="inner">
+      <ul class="tick">
+        <li><b>Santa Maria dell'Isola</b> — THE photo. Church free, garden + rooftop <span class="pr">€3</span>.</li>
+        <li>Old-town belvederes over the white beaches — free, best at sunset.</li>
+        <li><b>Scilla day trip</b> — regional train ~1h13 <span class="pr">€5–6.70</span>; Chianalea fishing lanes, Castello Ruffo €2–3.</li>
+        <li><b>Capo Vaticano</b> — train to Ricadi 9 min (€1.50–2) + 2 km walk to the viewpoint.</li>
+        <li><b>Pizzo half-day</b> — Bar Ercole's original tartufo gelato bomb <span class="pr">€5–7</span>.</li>
+        <li>Beaches free + empty; sea ~21–22°C.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Sleep — ~€60–90</summary>
+    <div class="inner stay">
+      <ul>
+        <li><b>Donnaciccina Accommodation</b> <span class="pr">€60–80</span><span> — B&amp;B in an old-town alley. Top pick.</span></li>
+        <li><b>Aether Suites</b> <span class="pr">~€80s</span><span> — 9.4 on Booking.</span></li>
+        <li><b>Javelin's Accommodation</b> <span class="pr">~€80s</span><span> — near the station.</span></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Eat — 'nduja country</summary>
+    <div class="inner eat">
+      <ul>
+        <li><b>Gelati Tonino</b> <span class="pr">€3–5</span><span> — 60+ flavours incl. Tropea red onion &amp; 'nduja gelato. Trust it.</span></li>
+        <li><b>Livasì Food &amp; Store</b> <span class="pr">€8–15</span><span> — 'nduja + salumi boards, panini.</span></li>
+        <li><b>Marasusa Bistrot di Mare</b> <span class="pr">€12–20</span><span> — octopus with Tropea onion.</span></li>
+        <li><b>3 Nodi</b> / <b>Incipit</b> <span class="pr">€12–22</span><span> — the seafood dinners.</span></li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ============ CEFALU ============ -->
+<section id="cefalu">
+  <div class="stophead"><h3 class="serif">Cefalù</h3><span class="dates">25–29 Oct · 4 nights</span></div>
+  <p class="lede">Medieval lanes, a golden Norman cathedral, and a sandy beach in the town centre. Your wind-down. Clocks go back the day you arrive — sunsets ~5:10pm, so mornings are for doing.</p>
+
+  <details open>
+    <summary>Getting there — 25 Oct (your train rides a ferry!)</summary>
+    <div class="inner">
+      <div class="route">
+        <p class="leg"><b>1 · Regionale Tropea→Villa San Giovanni <span class="pr">~€6</span></b><span>1h15–1h45, direct.</span></p>
+        <p class="leg"><b>2 · InterCity 723 (Rome–Palermo) <span class="pr">€13–20</span></b><span>Dep Villa S.G. ~14:25 — the carriages are shunted ONTO the Messina ferry (stay aboard for the crossing, or go up on deck) — arrive <b>Cefalù 18:24</b>. Book on Trenitalia; re-verify time ~1 month out.</span></p>
+        <p class="leg"><b>DIY alt (~same cost)</b><span>Caronte foot ferry Villa S.G.→Messina €2.50 (every 40 min) + train Messina→Cefalù €9–11 (~2 h).</span></p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>Do</summary>
+    <div class="inner">
+      <table class="kv">
+        <tr><td><b>Duomo</b> — UNESCO Arab-Norman cathedral, the 1131 Christ Pantocrator mosaic. Rooftops + cloister "red route" €13</td><td><span class="pr">free</span></td></tr>
+        <tr><td><b>La Rocca</b> — 45–60 min climb, Temple of Diana, the view of the town. Last entry 17:30 SHARP, closed shoes required. Go morning</td><td><span class="pr">€5</span></td></tr>
+        <tr><td><b>Town beach</b> — sandy, free, sea ~21–22°C: one last swim if the sun's out</td><td><span class="pr">free</span></td></tr>
+        <tr><td>Porta Pescara, the old washhouse (lavatoio), golden-hour at the marina</td><td><span class="pr">free</span></td></tr>
+      </table>
+    </div>
+  </details>
+
+  <details>
+    <summary>Palermo day trip</summary>
+    <div class="inner">
+      <ul class="tick">
+        <li>Regional train <span class="pr">€6.80 each way</span>, 45–65 min, every 30–60 min. Confirm the evening return time that morning.</li>
+        <li><b>Palazzo dei Normanni + Cappella Palatina</b> <span class="pr">€19</span> — go EARLY (last entry 15:45; Sun mornings only).</li>
+        <li><b>Palermo Cathedral</b> — nave free; rooftops ~€7.</li>
+        <li><b>Ballarò market</b> — mornings, best before 11.</li>
+        <li>Street-food crawl: panelle panino at <b>Friggitoria Chiluzzo</b> €2–3 · sfincione at <b>Forno Pietro Marino</b> €1.50–2 · arancine €3 · brave? pani ca meusa at <b>Nino u Ballerino</b> €3–4.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Sleep — old town, ~€70–90</summary>
+    <div class="inner stay">
+      <ul>
+        <li><b>Casa Roberto</b> <span class="pr">~€70</span><span> — 9.6 "Exceptional" on Booking. Top pick.</span></li>
+        <li><b>Villa Tiche</b> <span class="pr">~€79</span> · <b>Casa Vacanza Adorno</b> <span class="pr">~€87</span> · <b>Dolce Vita Rooms</b> <span class="pr">~€88</span><span> — all old town, station 10 min walk.</span></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Eat</summary>
+    <div class="inner eat">
+      <ul>
+        <li><b>Ti Vitti</b> (Via Umberto I) <span class="pr">€3–4</span><span> — cannoli filled to order. Non-negotiable.</span></li>
+        <li><b>La Brace</b> <span class="pr">€10–14</span><span> — family trattoria, pasta alla norma.</span></li>
+        <li><b>Lo Scoglio Ubriaco</b> <span class="pr">€14–22</span><span> — seafood on the rocks at sunset.</span></li>
+        <li>Kiosk arancine <span class="pr">€2.50–3.50</span>, sfincione <span class="pr">€1.50–2.50</span>.</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ============ HOME ============ -->
+<section id="home">
+  <div class="stophead"><h3 class="serif">Back to Rome &amp; home</h3><span class="dates">29/30 Oct – 1 Nov</span></div>
+
+  <div class="alert warn">
+    <b>⚠ Naples airport is CLOSED all of November 2026</b>
+    Runway works. You fly from Rome FCO so you're fine — but there's no Naples backup, so lock the Rome return in early.
+  </div>
+
+  <details open>
+    <summary>Two good ways back — book now</summary>
+    <div class="inner">
+      <div class="route">
+        <p class="leg"><b>✈ FLY (recommended) — 30 Oct <span class="pr">€55–90 all-in</span></b><span>Train Cefalù→Palermo €6.80 → bus/train to airport ~€6.50 → Palermo→Rome FCO: ~18 flights/day (Ryanair/Wizz from €25–60, ITA €80–130), 1h10. In Rome by lunch.</span></p>
+        <p class="leg"><b>🌙 SLEEPER — 29 Oct <span class="pr">€45–90</span></b><span>Intercity Notte calls Cefalù ~21:23, crosses the strait on the ferry while you sleep, Roma Termini ~10:30. Saves a hotel night; book on Trenitalia now.</span></p>
+      </div>
+      <p style="margin:8px 0 0">Either way: <b>31 Oct = full free day in Rome</b> — last carbonara, Trastevere wander, anything you missed.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>1 Nov — departure day notes</summary>
+    <div class="inner">
+      <ul class="tick">
+        <li>All Saints' Day (Sunday): Vatican CLOSED; state museums (Colosseum etc.) are FREE that morning if you have spare hours — crowded though.</li>
+        <li>Leonardo Express to FCO €14, every 15 min — allow 3 h before an international flight.</li>
+        <li>Taxi flat €55 (white "Roma Capitale" cars only).</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ============ MONEY ============ -->
+<section id="money">
+  <h2 class="sect">Money</h2>
+  <div class="card">
+    <ul class="tick">
+      <li><b>Best setup:</b> Up Bank debit (0% FX, unlimited free o/s ATM) as primary + Wise as backup. Order both NOW (delivery 1–2 weeks).</li>
+      <li><b>ATMs:</b> use bank ATMs (Intesa Sanpaolo, UniCredit, BNL / Alpha, NBG in Greece). <b>Never Euronet</b>. Always choose "withdraw in EUR" — the "convert to AUD" offer costs 5–10%.</li>
+      <li><b>Cash:</b> keep €200–300. Needed for: SITA buses, tabacchi, market stalls, small trattorias, city tax at hotels.</li>
+      <li><b>Tipping:</b> not expected. The €1–3 "coperto" on the bill is normal, not a scam. Round up or leave €2–5 for great service.</li>
+      <li><b>Food budget:</b> ~€26/day cheap (bar breakfast + street lunch + pizza) · €42–57/day with trattoria dinners. Lunch menù del giorno = 30–40% cheaper than dinner.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ PHONE ============ -->
+<section id="phone">
+  <h2 class="sect">Phone &amp; data</h2>
+  <div class="card">
+    <ul class="tick">
+      <li><b>Get: Airalo "Eurolink" eSIM, 50GB / 90 days ≈ <span class="pr">A$148</span></b> — ONE plan covers Greece + Italy the whole trip. Install via the app before you fly. (Cheaper: Nomad 2×50GB/30d ≈ A$92, needs a mid-trip switch.)</li>
+      <li>Don't use Aussie roaming — $5–10/day = A$225–450 for the trip.</li>
+      <li><b>Before departure, on wifi:</b> download offline Google Maps (Rome, Naples/Amalfi, Calabria, Sicily) + Google Translate Italian pack.</li>
+      <li><b>Install:</b> Trenitalia · Italo · Ferryhopper · Moovit (Rome transit) · Unico Campania (Naples area tickets) · FreeNow (taxis) · TheFork (restaurant deals) · XE (currency).</li>
+      <li>Power: Australia Type I plugs don't fit — bring 2× Type C ("Europlug") adapters. Voltage is the same, no converter needed.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SAFETY ============ -->
+<section id="safety">
+  <h2 class="sect">Safety &amp; scams</h2>
+  <div class="card">
+    <p style="margin:0 0 8px">These are safe places — the risk is petty theft, not violence. The whole game is bags-in-front in crowds.</p>
+    <ul class="tick">
+      <li><b>Pickpocket zones:</b> Termini station, Metro Line A, bus 64, Trevi crowds; Naples Garibaldi station and the <b>Circumvesuviana train</b> (worst line in the country — zip everything, bag on your front).</li>
+      <li><b>Scams:</b> anyone tying a "free" bracelet on you or holding a petition clipboard — hard no, keep walking. Taxi: only white official cars, meter on Tariff 1, or FreeNow app.</li>
+      <li><b>Validate</b> paper train/bus tickets in the little machines before boarding — €100 fine.</li>
+      <li>Carry your passport on Pompeii day (named tickets); otherwise a photo/copy + passport in the room safe.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <p class="big" style="margin:0 0 6px">If things go wrong</p>
+    <table class="kv">
+      <tr><td>All emergencies (EU-wide, English OK)</td><td><b>112</b></td></tr>
+      <tr><td>Australian Embassy Rome — Via Antonio Bosio 5</td><td><b>+39 06 8527 21</b></td></tr>
+      <tr><td>24h Consular Emergency Centre (Canberra)</td><td><b>+61 2 6261 3305</b></td></tr>
+      <tr><td>Report Rome taxi scams</td><td><b>060606</b></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ PACK ============ -->
+<section id="pack">
+  <h2 class="sect">Packing</h2>
+  <div class="card">
+    <ul class="tick">
+      <li><b>Bag: 40–50L backpack or small soft case</b> — NOT a big roller. Positano/Capri/train stations = endless stairs; ferries charge for big bags.</li>
+      <li>1 week of clothes, laundry mid-trip (lavanderia wash+dry ~€14–20, or hotel service).</li>
+      <li>Layers: t-shirts + light jumper + compact rain jacket; one warmer layer for late-Oct evenings (12–15°C).</li>
+      <li>Real walking shoes (Pompeii stones, La Rocca requires closed shoes) + swimmers + quick-dry towel.</li>
+      <li>Hat, sunscreen, compact umbrella, scarf (doubles as church shoulder-cover), 2× Type C power adapters, refillable bottle (Rome's 2,500 nasoni fountains are free &amp; safe).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ BUDGET ============ -->
+<section id="budget">
+  <h2 class="sect">Budget — Italy leg (19 days)</h2>
+  <div class="card tblwrap">
+    <table class="grid">
+      <tr><th>Category</th><th>Lean</th><th>Comfortable</th></tr>
+      <tr><td>Beds (~€80/night × 19)</td><td class="num">€1,520</td><td class="num">€1,615</td></tr>
+      <tr><td>Food</td><td class="num">€380</td><td class="num">€950</td></tr>
+      <tr><td>Intercity transport (all legs + flight)</td><td class="num">€166</td><td class="num">€220</td></tr>
+      <tr><td>Attractions</td><td class="num">€152</td><td class="num">€182</td></tr>
+      <tr><td>Local transport + extras</td><td class="num">€162</td><td class="num">€257</td></tr>
+      <tr><td><b>Italy total</b></td><td class="num"><b>≈ €2,380 (A$4,050)</b></td><td class="num"><b>≈ €3,225 (A$5,480)</b></td></tr>
+    </table>
+  </div>
+  <p class="lede">That's the Italy leg on the ground, excluding international flights and the Greece leg (already sorted).</p>
+</section>
+
+<p class="foot">Researched &amp; compiled 20 Aug 2026 by a 12-agent sweep of official ticketing sites, operators and current guides. Prices are 2026 published rates — treat hotel numbers as "from" rates and re-check live before booking. Load-bearing timetables (IC 723, the night train, late-Oct ferries) should be re-verified ~2 weeks before each leg. Buon viaggio, Bradley 🍋</p>
+</div>
