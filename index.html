@@ -9,7 +9,6 @@
 <meta name="theme-color" content="#0F181E" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Italy Trip">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#127819;</text></svg>">
@@ -17,8 +16,6 @@
 <style>
   html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   body{margin:0}
-  .wrap{padding-left:max(14px, env(safe-area-inset-left));padding-right:max(14px, env(safe-area-inset-right))}
-  .topbar{padding-top:max(9px, env(safe-area-inset-top))}
 </style>
 </head>
 <body>
@@ -1480,8 +1477,8 @@
   eur.addEventListener('input',fromEur);
   aud.addEventListener('input',fromAud);
   rate.addEventListener('input',fromEur);
-  try{var s=localStorage.getItem('fxrate'); if(s && num(s)>0){rate.value=s}catch(e){}
-  rate.addEventListener('change',function(){try{localStorage.setItem('fxrate',rate.value)}catch(e){});
+  try{var s=localStorage.getItem('fxrate'); if(s && num(s)>0){rate.value=s}}catch(e){}
+  rate.addEventListener('change',function(){try{localStorage.setItem('fxrate',rate.value)}catch(e){}});
   var btns=document.querySelectorAll('.fxquick button');
   for(var b=0;b<btns.length;b++){
     btns[b].addEventListener('click',function(){eur.value=this.getAttribute('data-eur');fromEur()});
