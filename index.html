@@ -4,15 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rome to Cefalù</title>
-<meta name="description" content="Italy trip guide, 12 October to 1 November 2026: Rome, Sorrento, Positano, Capri, Tropea and Cefalu. Bookings, prices, routes, hotels and food.">
+<meta name="description" content="Day-by-day Italy trip guide, 12 October to 1 November 2026: Rome, Sorrento, Positano, Capri, Tropea and Cefalu. Bookings, prices, routes, hotels and food.">
 <meta name="theme-color" content="#F4F6F6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0F181E" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Italy Trip">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="color-scheme" content="light dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#127819;</text></svg>">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#127819;</text></svg>">
 <style>
   html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   body{margin:0}
@@ -193,6 +194,55 @@
   .fxrate{display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:13.5px; color:var(--muted)}
   .fxrate input{width:84px; font-size:15px; font-weight:700; padding:6px 8px; border:1.5px solid var(--line); border-radius:9px; background:var(--bg); color:var(--ink)}
 
+  /* day by day */
+  .days{display:flex; flex-direction:column; gap:9px}
+  .day{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--line);
+       border-radius:12px; padding:12px 14px; box-shadow:var(--shadow)}
+  .day .dhd{display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:3px}
+  .day .ddate{font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--sea)}
+  .day .dsleep{font-size:11.5px; color:var(--muted); white-space:nowrap}
+  .day h4{margin:0 0 4px; font-size:17px; font-weight:700; line-height:1.25}
+  .day p{margin:0; font-size:14px; line-height:1.5}
+  .day.flag-warn{border-left-color:var(--warn); background:var(--warn-soft)}
+  .day.flag-go{border-left-color:var(--good); background:var(--good-soft)}
+  .day.flag-info{border-left-color:var(--sea); background:var(--sea-soft)}
+  .day.is-today{border-left-color:var(--lemon); border-color:var(--lemon)}
+  .day.is-today .ddate::after{content:" \00B7 TODAY"; color:var(--lemon)}
+  .day.is-past{opacity:.45}
+  /* phrasebook */
+  table.phr{width:100%; border-collapse:collapse; font-size:14.5px}
+  table.phr td{padding:8px 6px 8px 0; border-bottom:1px solid var(--line); vertical-align:top}
+  table.phr td:first-child{color:var(--muted); width:44%}
+  table.phr tr:last-child td{border-bottom:none}
+  .pron{display:block; font-size:12px; color:var(--muted); font-style:italic; margin-top:1px}
+  /* my bookings */
+  .bk{border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin-bottom:10px; background:var(--bg)}
+  .bkhd{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px}
+  .bkhd b{font-size:15.5px}
+  .bkhd span{font-size:12px; color:var(--muted)}
+  .bk input{display:block; width:100%; margin-bottom:6px}
+  .bk input:last-child{margin-bottom:0}
+  .bkrow{display:flex; flex-direction:column; gap:3px; margin-bottom:10px}
+  .bkrow label{font-size:12.5px; color:var(--muted); font-weight:600}
+  #notes input[type=text], #notes textarea{
+    font:inherit; font-size:15px; padding:9px 11px; border:1.5px solid var(--line);
+    border-radius:9px; background:var(--card); color:var(--ink); width:100%; box-sizing:border-box}
+  #notes textarea{resize:vertical; line-height:1.5}
+  #notes input:focus, #notes textarea:focus{outline:2px solid var(--sea); border-color:var(--sea)}
+  /* sos + search */
+  .sos{margin-left:auto; flex:none; background:var(--warn); color:#fff; text-decoration:none;
+       font-size:12px; font-weight:800; letter-spacing:.06em; padding:7px 11px; border-radius:9px}
+  .sos:hover{filter:brightness(1.08)}
+  .dsearch{padding:10px 16px 8px}
+  .dsearch input{width:100%; box-sizing:border-box; font:inherit; font-size:15px; padding:9px 11px;
+    border:1.5px solid var(--line); border-radius:10px; background:var(--bg); color:var(--ink)}
+  .dsearch input:focus{outline:2px solid var(--sea); border-color:var(--sea)}
+  a.qhit{display:block; padding:9px 16px; border-bottom:1px solid var(--line); text-decoration:none; color:var(--ink)}
+  a.qhit b{display:block; font-size:14px}
+  a.qhit span{display:block; font-size:12px; color:var(--muted); line-height:1.4;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  a.qhit mark{background:var(--lemon-soft); color:var(--lemon); font-weight:700}
+  .qnone{padding:10px 16px; font-size:13px; color:var(--muted); margin:0}
   .foot{color:var(--muted); font-size:12.5px; margin-top:36px; border-top:1px solid var(--line); padding-top:14px}
   .big{font-size:19px; font-weight:700}
 </style>
@@ -202,12 +252,17 @@
     <span></span><span></span><span></span>
   </button>
   <div class="where" id="where">Trip plan</div>
+  <a class="sos" href="#safety" id="sosbtn" title="Emergency numbers">SOS</a>
 </div>
 <div class="scrim" id="scrim"></div>
 <nav class="drawer" id="drawer" aria-label="Sections">
   <div class="dhead"><b>Jump to a section</b><button id="closemenu" aria-label="Close menu">✕</button></div>
+  <div class="dsearch"><input type="search" id="q" placeholder="Search the guide…" autocomplete="off" aria-label="Search"></div>
+  <div id="qres"></div>
+  <a class="mi" href="#today">🗓️ Day by day</a>
   <a class="mi" href="#plan">🗺️ Trip plan &amp; weather</a>
   <a class="mi" href="#book">✅ What to book &amp; when</a>
+  <a class="mi" href="#notes">📝 My bookings</a>
   <a class="mi" href="#rome">🏛️ Rome <small>12–16 Oct</small></a>
   <a class="mi" href="#sorrento">🍋 Sorrento <small>16–18 Oct</small></a>
   <a class="mi" href="#positano">🏖️ Positano <small>18–20 Oct</small></a>
@@ -215,6 +270,8 @@
   <a class="mi" href="#tropea">🌶️ Tropea <small>22–25 Oct</small></a>
   <a class="mi" href="#cefalu">⛪ Cefalù <small>25–29 Oct</small></a>
   <a class="mi" href="#home">✈️ Home via Rome <small>29 Oct–1 Nov</small></a>
+  <a class="mi" href="#phrases">💬 Italian phrases</a>
+  <a class="mi" href="#hours">🕒 What’s shut, and when</a>
   <a class="mi" href="#money">💳 Money</a>
   <a class="mi" href="#phone">📱 Phone &amp; data</a>
   <a class="mi" href="#safety">🛡️ Safety</a>
@@ -230,6 +287,123 @@
   <h1 class="serif">Rome to Cefalù</h1>
   <p class="sub">Tap ☰ (top left) to jump between sections. Every booking site, map pin and price is a tap away. <span class="aud">A$ ≈ €×1.7</span></p>
 </header>
+
+<!-- ============ DAY BY DAY ============ -->
+<section id="today">
+  <h2 class="sect">Day by day</h2>
+  <div class="card" id="todaycard">
+    <p class="big" id="todayline" style="margin:0 0 2px">Loading&hellip;</p>
+    <p class="lede" id="todaysub" style="margin:0"></p>
+  </div>
+  <div class="days">
+  <div class="day" data-date="2026-10-12">
+   <div class="dhd"><span class="ddate">Mon 12 Oct</span><span class="dsleep">Rome</span></div>
+   <h4>Land in Rome</h4>
+   <p>Leonardo Express from FCO (<b>&euro;14</b>, 32 min) to Termini. Drop bags, then walk &mdash; don&rsquo;t nap. Aperitivo in Monti, early night. <b>Borghese is shut Mondays</b>, so don&rsquo;t plan it today.</p>
+  </div>
+  <div class="day" data-date="2026-10-13">
+   <div class="dhd"><span class="ddate">Tue 13 Oct</span><span class="dsleep">Rome</span></div>
+   <h4>Ancient Rome</h4>
+   <p><b>Colosseum</b> on your booked slot (go 8:30), then straight into the <b>Forum</b> and up <b>Palatine Hill</b> &mdash; same ticket, 24 hours. Lunch at Supplizio. Afternoon: San Clemente&rsquo;s three stacked churches. Evening: <b>Trevi after 10pm</b>, when it&rsquo;s free and half empty.</p>
+  </div>
+  <div class="day flag-info" data-date="2026-10-14">
+   <div class="dhd"><span class="ddate">Wed 14 Oct</span><span class="dsleep">Rome</span></div>
+   <h4>The Vatican</h4>
+   <p>Museums early on your booked slot, finish at the Sistine Chapel, then St Peter&rsquo;s. Lunch at Pizzarium, five minutes from the exit. <b>Heads up:</b> Wednesday is the papal audience &mdash; St Peter&rsquo;s Square is closed off much of the morning. Do the Museums first, the Basilica after 1pm.</p>
+  </div>
+  <div class="day" data-date="2026-10-15">
+   <div class="dhd"><span class="ddate">Thu 15 Oct</span><span class="dsleep">Rome</span></div>
+   <h4>Baroque and Caravaggio</h4>
+   <p><b>Borghese Gallery</b> on your timed slot &mdash; Bernini&rsquo;s sculptures, and the best two hours in Rome. Walk back down through the gardens. Afternoon: Pantheon, San Luigi dei Francesi for the Caravaggios (<b>shut 12:45&ndash;14:30</b>), Santa Maria sopra Minerva. Dinner in Trastevere &mdash; Da Enzo, queue before 7pm.</p>
+  </div>
+  <div class="day" data-date="2026-10-16">
+   <div class="dhd"><span class="ddate">Fri 16 Oct</span><span class="dsleep">Sorrento</span></div>
+   <h4>Rome to Sorrento</h4>
+   <p>Morning train to Naples (1h10, pre-booked). Then <b>Campania Express</b> to Sorrento (&euro;15, guaranteed seat and luggage space) &mdash; or the &euro;5 Circumvesuviana if you&rsquo;re travelling light and alert. Afternoon: settle in, walk down to Marina Grande, sunset from the Villa Comunale gardens.</p>
+  </div>
+  <div class="day" data-date="2026-10-17">
+   <div class="dhd"><span class="ddate">Sat 17 Oct</span><span class="dsleep">Sorrento</span></div>
+   <h4>Pompeii</h4>
+   <p>Early train to <b>Pompei Scavi</b> (~30 min, the station is 100 m from the gate). Your 9am slot &mdash; <b>carry your passport</b>, the ticket is in your name. Allow 4&ndash;6 hours; it is a whole city with almost no shade. Back for a late lunch, or push on to Naples for the Veiled Christ and a pizza at Da Michele.</p>
+  </div>
+  <div class="day" data-date="2026-10-18">
+   <div class="dhd"><span class="ddate">Sun 18 Oct</span><span class="dsleep">Positano</span></div>
+   <h4>Sorrento to Positano</h4>
+   <p>Ferry across (30&ndash;40 min, <b>&euro;16&ndash;21.50</b>). Worth it over the bus, which drops you 200 stairs above the town. A porter is &euro;10&ndash;20 and worth every cent here. Afternoon: wander Via dei Mulini down to the beach, swim, watch the light go.</p>
+  </div>
+  <div class="day" data-date="2026-10-19">
+   <div class="dhd"><span class="ddate">Mon 19 Oct</span><span class="dsleep">Positano</span></div>
+   <h4>Path of the Gods</h4>
+   <p>The big walk: bus to Amalfi, change for Bomerano, then ~3 hours along the cliff edge to Nocelle with the sea 500 m below you. Go early, walk east to west. Or the lazy version &mdash; a boat along the coast, which is how this town was meant to be seen. Sea is still 22&deg;C.</p>
+  </div>
+  <div class="day flag-warn" data-date="2026-10-20">
+   <div class="dhd"><span class="ddate">Tue 20 Oct</span><span class="dsleep">Capri</span></div>
+   <h4>Positano to Capri</h4>
+   <p>Hydrofoil (<b>&euro;27.50&ndash;29</b>, 40&ndash;50 min). Use NLG, Sant&rsquo;Andrea or Lucibello &mdash; Alicost doesn&rsquo;t sail Tuesdays this late in the year. <b>If it is blowing:</b> Positano&rsquo;s pier is exposed and is dropped first. Fall back to the bus to Sorrento then the year-round ferry. Book nothing unmissable this morning. Tonight: Tuesday is the commonest closing day on Capri &mdash; Il Solitario or Le Arcate are the safe bets.</p>
+  </div>
+  <div class="day" data-date="2026-10-21">
+   <div class="dhd"><span class="ddate">Wed 21 Oct</span><span class="dsleep">Capri</span></div>
+   <h4>Capri</h4>
+   <p><b>Blue Grotto first thing</b> &mdash; it is roughly 50/50 open this late and the skippers decide at 9am. Bus from Anacapri, pay at the cave (&euro;18, cash only). Then the <b>giro dell&rsquo;isola</b> boat (&euro;25) &mdash; the best value on the whole trip. Monte Solaro chairlift, then the Gardens of Augustus at golden hour.</p>
+  </div>
+  <div class="day" data-date="2026-10-22">
+   <div class="dhd"><span class="ddate">Thu 22 Oct</span><span class="dsleep">Tropea</span></div>
+   <h4>Capri to Tropea (a long one, ~7 h)</h4>
+   <p>Early ferry to Naples, metro to Centrale, train to Lamezia Terme, regional to Tropea. Eat properly before the last leg. If you want a Tropea food or wine tour, the Thursday slots are the ones that run &mdash; book direct with CST, not the resale sites.</p>
+  </div>
+  <div class="day" data-date="2026-10-23">
+   <div class="dhd"><span class="ddate">Fri 23 Oct</span><span class="dsleep">Tropea</span></div>
+   <h4>Tropea</h4>
+   <p>Slow morning, and you have earned it. Santa Maria dell&rsquo;Isola late afternoon when the light is good (church free, rooftop &euro;3). The <b>olive oil experience runs Fridays</b>, and late October is the start of the real harvest, so the mill may be turning. Beaches free and empty.</p>
+  </div>
+  <div class="day flag-go" data-date="2026-10-24">
+   <div class="dhd"><span class="ddate">Sat 24 Oct</span><span class="dsleep">Tropea</span></div>
+   <h4>The Aeolian Islands &mdash; Stromboli</h4>
+   <p><b>The last sailing of the 2026 season.</b> Leaves Tropea 10:00, back ~22:00: Lipari, Panarea, then Stromboli village &mdash; and after dark the boat rounds the Sciara del Fuoco to watch lava run into the sea. <b>&euro;70</b> booked direct at tropea.biz. Take a jacket; it is cold on deck at night.</p>
+  </div>
+  <div class="day flag-warn" data-date="2026-10-25">
+   <div class="dhd"><span class="ddate">Sun 25 Oct</span><span class="dsleep">Cefal&ugrave;</span></div>
+   <h4>Tropea to Cefal&ugrave; &mdash; and the clocks go back</h4>
+   <p><b>You gained an hour overnight</b>, but it is dark by six from here on. Plan mornings, not evenings. Regional train to Villa San Giovanni, then <b>InterCity 723</b> (~14:25) &mdash; the carriages are loaded onto a ferry and you cross the Strait of Messina by sea. Cefal&ugrave; 18:24. <b>Sunday has very few Calabrian trains.</b> Check your connection the night before and have a plan B.</p>
+  </div>
+  <div class="day" data-date="2026-10-26">
+   <div class="dhd"><span class="ddate">Mon 26 Oct</span><span class="dsleep">Cefal&ugrave;</span></div>
+   <h4>Palermo &mdash; Monreale and the Catacombs</h4>
+   <p>Early train (&euro;6.80). <b>Capuchin Catacombs at 09:00</b> &mdash; 8,000 mummified Palermitans still in their clothes. It shuts 12:30&ndash;15:00, so go first. Walk to Piazza Indipendenza, bus 389 to <b>Monreale</b>: 6,500 m&sup2; of gold mosaic, the whole Bible floor to ceiling. Cathedral before 13:00, then the cloister (no midday closure). Buy the <b>&euro;3.50 AMAT day ticket</b> &mdash; you will take four buses. Tonight in Cefal&ugrave;: Tinchit&egrave;, the one good place open on Mondays.</p>
+  </div>
+  <div class="day" data-date="2026-10-27">
+   <div class="dhd"><span class="ddate">Tue 27 Oct</span><span class="dsleep">Cefal&ugrave;</span></div>
+   <h4>Palermo &mdash; the city</h4>
+   <p><b>La Martorana first</b> (&euro;2, mornings only, shut Mondays &mdash; which is why it is today). Best mosaics-per-euro in Sicily. San Cataldo next door. Then Cappella Palatina (&euro;19, last entry 15:45), the Cathedral rooftops, Quattro Canti, Ballar&ograve; market, and a Teatro Massimo tour (&euro;14). Street food all day.</p>
+  </div>
+  <div class="day" data-date="2026-10-28">
+   <div class="dhd"><span class="ddate">Wed 28 Oct</span><span class="dsleep">Cefal&ugrave;</span></div>
+   <h4>Cefal&ugrave;</h4>
+   <p><b>La Rocca in the morning</b> &mdash; 45&ndash;60 min of steps, closed shoes required, and remember it is dark by six now. Temple of Diana and the whole coast from the top. Then the Duomo&rsquo;s Pantocrator mosaic, the medieval washhouse, the Mandralisca portrait. Buy the <b>&euro;10 SIBAC pass</b> &mdash; it covers five sites. Last swim.</p>
+  </div>
+  <div class="day" data-date="2026-10-29">
+   <div class="dhd"><span class="ddate">Thu 29 Oct</span><span class="dsleep">Cefal&ugrave; / train</span></div>
+   <h4>Cefal&ugrave;, or the night train</h4>
+   <p>A do-nothing day: the beach, cannoli filled to order at Ti Vitti, a boat along the coast if one is still running. <b>If you chose the sleeper:</b> the Intercity Notte calls at Cefal&ugrave; ~21:23 and crosses the strait while you sleep, into Rome ~10:30.</p>
+  </div>
+  <div class="day" data-date="2026-10-30">
+   <div class="dhd"><span class="ddate">Fri 30 Oct</span><span class="dsleep">Rome</span></div>
+   <h4>Back to Rome</h4>
+   <p>Train to Palermo (&euro;6.80), airport bus, then the 1h10 flight to Fiumicino. In Rome by lunchtime. Leonardo Express into town. Somewhere good tonight &mdash; last proper Italian dinner.</p>
+  </div>
+  <div class="day" data-date="2026-10-31">
+   <div class="dhd"><span class="ddate">Sat 31 Oct</span><span class="dsleep">Rome</span></div>
+   <h4>Rome, free day</h4>
+   <p>Whatever you missed. Castel Sant&rsquo;Angelo&rsquo;s ramparts at sunset, the Capuchin Crypt, Ostia Antica if you want one more ruin. Last carbonara. Repack and weigh the bag &mdash; you have been collecting limoncello and &rsquo;nduja for three weeks.</p>
+  </div>
+  <div class="day flag-info" data-date="2026-11-01">
+   <div class="dhd"><span class="ddate">Sun 1 Nov</span><span class="dsleep">&rarr; home</span></div>
+   <h4>Fly home</h4>
+   <p><b>All Saints&rsquo; Day.</b> The Vatican is closed, but state museums including the Colosseum are <b>free</b> this morning if you have hours to spare &mdash; crowded, though. Leonardo Express to FCO (&euro;14, every 15 min); allow three hours. Sunday timetable, so leave a little extra.</p>
+  </div>
+  </div>
+  <p class="lede" style="margin-top:12px">Every stop has its own section with the bookings, hotels and food &mdash; tap &#9776; to jump there.</p>
+</section>
 
 <!-- ============ PLAN ============ -->
 <section id="plan">
@@ -328,6 +502,70 @@
       </ul>
     </div>
   </details>
+</section>
+
+<!-- ============ MY BOOKINGS ============ -->
+<section id="notes">
+  <h2 class="sect">My bookings</h2>
+  <p class="lede">Type your confirmation numbers here as you book. It saves on this phone and works offline &mdash; nothing is sent anywhere. Handy at a check-in desk with no signal.</p>
+  <div class="card">
+    <p class="big" style="margin:0 0 8px">Where I&rsquo;m sleeping</p>
+   <div class="bk">
+     <div class="bkhd"><b>Rome</b><span>12&ndash;16 Oct</span></div>
+     <input type="text" data-k="h_rome1_name" placeholder="Hotel name" autocomplete="off">
+     <input type="text" data-k="h_rome1_ref"  placeholder="Confirmation number" autocomplete="off">
+     <input type="text" data-k="h_rome1_note" placeholder="Address, check-in time, phone" autocomplete="off">
+   </div>
+   <div class="bk">
+     <div class="bkhd"><b>Sorrento</b><span>16&ndash;18 Oct</span></div>
+     <input type="text" data-k="h_sorrento_name" placeholder="Hotel name" autocomplete="off">
+     <input type="text" data-k="h_sorrento_ref"  placeholder="Confirmation number" autocomplete="off">
+     <input type="text" data-k="h_sorrento_note" placeholder="Address, check-in time, phone" autocomplete="off">
+   </div>
+   <div class="bk">
+     <div class="bkhd"><b>Positano</b><span>18&ndash;20 Oct</span></div>
+     <input type="text" data-k="h_positano_name" placeholder="Hotel name" autocomplete="off">
+     <input type="text" data-k="h_positano_ref"  placeholder="Confirmation number" autocomplete="off">
+     <input type="text" data-k="h_positano_note" placeholder="Address, check-in time, phone" autocomplete="off">
+   </div>
+   <div class="bk">
+     <div class="bkhd"><b>Capri</b><span>20&ndash;22 Oct</span></div>
+     <input type="text" data-k="h_capri_name" placeholder="Hotel name" autocomplete="off">
+     <input type="text" data-k="h_capri_ref"  placeholder="Confirmation number" autocomplete="off">
+     <input type="text" data-k="h_capri_note" placeholder="Address, check-in time, phone" autocomplete="off">
+   </div>
+   <div class="bk">
+     <div class="bkhd"><b>Tropea</b><span>22&ndash;25 Oct</span></div>
+     <input type="text" data-k="h_tropea_name" placeholder="Hotel name" autocomplete="off">
+     <input type="text" data-k="h_tropea_ref"  placeholder="Confirmation number" autocomplete="off">
+     <input type="text" data-k="h_tropea_note" placeholder="Address, check-in time, phone" autocomplete="off">
+   </div>
+   <div class="bk">
+     <div class="bkhd"><b>Cefal&ugrave;</b><span>25&ndash;29 Oct</span></div>
+     <input type="text" data-k="h_cefalu_name" placeholder="Hotel name" autocomplete="off">
+     <input type="text" data-k="h_cefalu_ref"  placeholder="Confirmation number" autocomplete="off">
+     <input type="text" data-k="h_cefalu_note" placeholder="Address, check-in time, phone" autocomplete="off">
+   </div>
+   <div class="bk">
+     <div class="bkhd"><b>Rome</b><span>30 Oct&ndash;1 Nov</span></div>
+     <input type="text" data-k="h_rome2_name" placeholder="Hotel name" autocomplete="off">
+     <input type="text" data-k="h_rome2_ref"  placeholder="Confirmation number" autocomplete="off">
+     <input type="text" data-k="h_rome2_note" placeholder="Address, check-in time, phone" autocomplete="off">
+   </div>
+  </div>
+  <div class="card">
+    <p class="big" style="margin:0 0 8px">Travel &amp; tickets</p>
+    <div class="bkrow"><label>Flight in &mdash; arrival time at FCO</label><input type="text" data-k="t_fco" placeholder="Time / seat / reference" autocomplete="off"></div><div class="bkrow"><label>Train Rome&rarr;Naples, 16 Oct</label><input type="text" data-k="t_rn" placeholder="Time / seat / reference" autocomplete="off"></div><div class="bkrow"><label>Ferry Sorrento&rarr;Positano, 18 Oct</label><input type="text" data-k="t_f1" placeholder="Time / seat / reference" autocomplete="off"></div><div class="bkrow"><label>Ferry Positano&rarr;Capri, 20 Oct</label><input type="text" data-k="t_f2" placeholder="Time / seat / reference" autocomplete="off"></div><div class="bkrow"><label>Ferry Capri&rarr;Naples, 22 Oct</label><input type="text" data-k="t_f3" placeholder="Time / seat / reference" autocomplete="off"></div><div class="bkrow"><label>Train Naples&rarr;Lamezia, 22 Oct</label><input type="text" data-k="t_nl" placeholder="Time / seat / reference" autocomplete="off"></div><div class="bkrow"><label>InterCity 723 to Cefal&ugrave;, 25 Oct</label><input type="text" data-k="t_ic" placeholder="Time / seat / reference" autocomplete="off"></div><div class="bkrow"><label>Flight Palermo&rarr;Rome, 30 Oct</label><input type="text" data-k="t_pmo" placeholder="Time / seat / reference" autocomplete="off"></div><div class="bkrow"><label>Flight home, 1 Nov</label><input type="text" data-k="t_home" placeholder="Time / seat / reference" autocomplete="off"></div><div class="bkrow"><label>Travel insurance policy number</label><input type="text" data-k="t_ins" placeholder="Time / seat / reference" autocomplete="off"></div>
+  </div>
+  <div class="card">
+    <p class="big" style="margin:0 0 8px">Anything else</p>
+    <textarea data-k="freenotes" rows="6" placeholder="Restaurant bookings, tour times, the name of that wine&hellip;"></textarea>
+  </div>
+  <div class="card">
+    <p id="savestate" class="lede" style="margin:0 0 10px">Saved automatically on this device.</p>
+    <button class="wxbtn" id="exportnotes" type="button">Copy everything to clipboard</button>
+    <button class="wxbtn" id="clearnotes" type="button" style="margin-top:8px">Clear all saved details</button>
+  </div>
 </section>
 
 <!-- ============ ROME ============ -->
@@ -1036,6 +1274,91 @@
   </details>
 </section>
 
+<!-- ============ PHRASES ============ -->
+<section id="phrases">
+  <h2 class="sect">Italian, the bits you&rsquo;ll actually use</h2>
+  <p class="lede">English gets you a long way in Rome and on the Amalfi Coast, and much less far in Calabria. Even a wobbly <i>buongiorno</i> changes how people treat you. Stress the syllable in capitals.</p>
+  <details open>
+    <summary>The basics</summary>
+    <div class="inner">
+      <table class="phr"><tr><td>Good morning / afternoon</td><td><b>Buongiorno</b><span class="pron">bwon-JOR-no</span></td></tr><tr><td>Good evening</td><td><b>Buonasera</b><span class="pron">bwona-SEH-ra</span></td></tr><tr><td>Please</td><td><b>Per favore</b><span class="pron">per fa-VOR-eh</span></td></tr><tr><td>Thank you</td><td><b>Grazie</b><span class="pron">GRAT-see-eh</span></td></tr><tr><td>You&rsquo;re welcome / go ahead</td><td><b>Prego</b><span class="pron">PREH-go</span></td></tr><tr><td>Excuse me (to pass)</td><td><b>Permesso</b><span class="pron">per-MESS-o</span></td></tr><tr><td>Excuse me (to ask)</td><td><b>Scusi</b><span class="pron">SKOO-zee</span></td></tr><tr><td>Sorry</td><td><b>Mi dispiace</b><span class="pron">mee dis-PYAH-cheh</span></td></tr><tr><td>Yes / No</td><td><b>S&igrave; / No</b><span class="pron">see / no</span></td></tr><tr><td>Do you speak English?</td><td><b>Parla inglese?</b><span class="pron">PAR-la in-GLEH-zeh</span></td></tr><tr><td>I don&rsquo;t understand</td><td><b>Non capisco</b><span class="pron">non ka-PEES-ko</span></td></tr></table>
+    </div>
+  </details>
+  <details>
+    <summary>Eating</summary>
+    <div class="inner">
+      <table class="phr"><tr><td>A table for two, please</td><td><b>Un tavolo per due, per favore</b><span class="pron">oon TA-vo-lo per DOO-eh</span></td></tr><tr><td>The menu, please</td><td><b>Il men&ugrave;, per favore</b><span class="pron">eel meh-NOO</span></td></tr><tr><td>What do you recommend?</td><td><b>Cosa mi consiglia?</b><span class="pron">KO-za mee kon-SEEL-ya</span></td></tr><tr><td>Still / sparkling water</td><td><b>Acqua naturale / frizzante</b><span class="pron">AK-wa natu-RA-leh / freed-ZAN-teh</span></td></tr><tr><td>A coffee (espresso)</td><td><b>Un caff&egrave;</b><span class="pron">oon kaf-FEH</span></td></tr><tr><td>I&rsquo;m allergic to&hellip;</td><td><b>Sono allergico a&hellip;</b><span class="pron">SO-no al-LER-jee-ko a</span></td></tr><tr><td>The bill, please</td><td><b>Il conto, per favore</b><span class="pron">eel KON-to</span></td></tr><tr><td>Can I pay by card?</td><td><b>Posso pagare con la carta?</b><span class="pron">POSS-o pa-GA-reh kon la KAR-ta</span></td></tr><tr><td>It was delicious</td><td><b>Era squisito</b><span class="pron">EH-ra skwee-ZEE-to</span></td></tr></table>
+    </div>
+  </details>
+  <details>
+    <summary>Getting around</summary>
+    <div class="inner">
+      <table class="phr"><tr><td>Where is&hellip;?</td><td><b>Dov&rsquo;&egrave;&hellip;?</b><span class="pron">do-VEH</span></td></tr><tr><td>A ticket to Naples</td><td><b>Un biglietto per Napoli</b><span class="pron">oon beel-YET-to per NA-po-lee</span></td></tr><tr><td>Which platform?</td><td><b>Quale binario?</b><span class="pron">KWA-leh bee-NA-ryo</span></td></tr><tr><td>Does this stop at&hellip;?</td><td><b>Ferma a&hellip;?</b><span class="pron">FER-ma a</span></td></tr><tr><td>Is this seat free?</td><td><b>&Egrave; libero questo posto?</b><span class="pron">eh LEE-be-ro KWES-to POS-to</span></td></tr><tr><td>What time does it leave?</td><td><b>A che ora parte?</b><span class="pron">a keh OR-a PAR-teh</span></td></tr><tr><td>Is the boat running today?</td><td><b>Il traghetto parte oggi?</b><span class="pron">eel tra-GHET-to PAR-teh OD-jee</span></td></tr><tr><td>How much is it?</td><td><b>Quanto costa?</b><span class="pron">KWAN-to KOS-ta</span></td></tr></table>
+    </div>
+  </details>
+  <details>
+    <summary>If something goes wrong</summary>
+    <div class="inner">
+      <table class="phr"><tr><td>Help!</td><td><b>Aiuto!</b><span class="pron">a-YOO-to</span></td></tr><tr><td>I need a doctor</td><td><b>Ho bisogno di un medico</b><span class="pron">o bee-ZON-yo dee oon MEH-dee-ko</span></td></tr><tr><td>Call an ambulance</td><td><b>Chiami un&rsquo;ambulanza</b><span class="pron">KYA-mee oon am-boo-LAN-tsa</span></td></tr><tr><td>I&rsquo;ve lost my passport</td><td><b>Ho perso il passaporto</b><span class="pron">o PER-so eel passa-POR-to</span></td></tr><tr><td>My bag has been stolen</td><td><b>Mi hanno rubato la borsa</b><span class="pron">mee AN-no roo-BA-to la BOR-sa</span></td></tr><tr><td>I&rsquo;ve missed my train</td><td><b>Ho perso il treno</b><span class="pron">o PER-so eel TREH-no</span></td></tr><tr><td>Where is the pharmacy?</td><td><b>Dov&rsquo;&egrave; la farmacia?</b><span class="pron">do-VEH la farma-CHEE-a</span></td></tr><tr><td>I don&rsquo;t feel well</td><td><b>Non mi sento bene</b><span class="pron">non mee SEN-to BEH-neh</span></td></tr></table>
+    </div>
+  </details>
+  <div class="card" style="margin-top:12px">
+    <p class="big" style="margin:0 0 6px">Two habits worth having</p>
+    <ul class="tick" style="margin:0">
+      <li>Say <b>buongiorno</b> walking into any shop or bar, and <b>arrivederci</b> leaving. Not doing it reads as rude.</li>
+      <li>Coffee standing at the bar is €1.20–1.50 and sitting down is triple. Order, drink it there, pay on the way out.</li>
+      <li>A <b>coperto</b> of €1–3 on the bill is a cover charge, not a scam and not a tip.</li>
+      <li>Ask for <b>&ldquo;un caff&egrave;&rdquo;</b> and you get an espresso. Asking for a latte gets you a glass of milk.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ OPENING DAYS ============ -->
+<section id="hours">
+  <h2 class="sect">What&rsquo;s shut, and when</h2>
+  <p class="lede">The single most common way to waste a morning in Italy is turning up on the wrong day. Your itinerary already dodges most of these &mdash; this is the check-before-you-walk list.</p>
+  <details>
+    <summary>Monday</summary>
+    <div class="inner">
+      <ul class="tick"><li><b>Borghese Gallery</b>, Rome &mdash; closed</li><li><b>Villa Jovis</b> and <b>Certosa</b>, Capri &mdash; closed</li><li><b>La Martorana</b>, Palermo &mdash; closed</li><li><b>Teatro Cicero &amp; Roman road</b>, Cefal&ugrave; &mdash; closed</li><li><b>Cefal&ugrave; restaurants</b> &mdash; La Brace, Ostaria del Duomo and La Botte all shut. Tinchit&egrave; is open.</li><li>Ostia Antica &mdash; closed</li></ul>
+    </div>
+  </details>
+  <details>
+    <summary>Tuesday</summary>
+    <div class="inner">
+      <ul class="tick"><li><b>MANN museum</b>, Naples &mdash; closed</li><li><b>Capri restaurants</b> &mdash; the commonest closing day; Lo Sfizio shut, Al Grottino possibly. Il Solitario and Le Arcate open.</li></ul>
+    </div>
+  </details>
+  <details>
+    <summary>Wednesday</summary>
+    <div class="inner">
+      <ul class="tick"><li><b>Catacombs of San Callisto</b>, Rome &mdash; closed (use San Sebastiano)</li><li><b>Cortile Pepe</b>, Cefal&ugrave; &mdash; closed</li><li>Papal audience morning &mdash; St Peter&rsquo;s Square closed off, Vatican area heaving</li></ul>
+    </div>
+  </details>
+  <details>
+    <summary>Sunday</summary>
+    <div class="inner">
+      <ul class="tick"><li><b>Vatican Museums</b> &mdash; closed all day</li><li><b>Monreale</b> &mdash; cathedral shut to tourists in the morning</li><li><b>Cefal&ugrave; street food tour</b> &mdash; does not run</li><li><b>Calabrian regional buses</b> &mdash; no service at all</li><li>Shops and small towns generally quiet; trains on reduced timetables</li></ul>
+    </div>
+  </details>
+  <details>
+    <summary>Every day, midday</summary>
+    <div class="inner">
+      <ul class="tick"><li><b>Southern Italy shuts 13:00&ndash;15:30ish.</b> Shops, some churches, most museums in smaller towns.</li><li><b>San Luigi dei Francesi</b>, Rome &mdash; 12:45&ndash;14:30</li><li><b>Capuchin Catacombs</b>, Palermo &mdash; 12:30&ndash;15:00</li><li><b>Monreale cathedral</b> &mdash; 13:00&ndash;14:00 (the cloister stays open)</li><li>Dinner rarely starts before 20:00. Turning up at 19:00 means eating alone.</li></ul>
+    </div>
+  </details>
+  <details>
+    <summary>Last entries that catch people out</summary>
+    <div class="inner">
+      <ul class="tick"><li><b>La Rocca</b>, Cefal&ugrave; &mdash; last entry 17:30, and enforced</li><li><b>Pompeii</b> &mdash; last entry 17:30 (site closes 19:30)</li><li><b>Cappella Palatina</b>, Palermo &mdash; last entry 15:45</li><li><b>Villa Jovis</b>, Capri &mdash; from 16 Oct it closes 16:00, last entry 15:30</li><li><b>Blue Grotto</b> &mdash; last entry ~15:30, and it shuts without warning in swell</li></ul>
+    </div>
+  </details>
+  <div class="alert go" style="margin-top:12px">
+    <b>&#10003; Your dates already avoid the worst of it</b>
+    Palermo city day is Tuesday so the Martorana is open; the Monreale day is Monday when it&rsquo;s shut anyway; and Cefal&ugrave;&rsquo;s Monday closures are covered by Tinchit&egrave;.
+  </div>
+</section>
+
 <!-- ============ MONEY ============ -->
 <section id="money">
   <h2 class="sect">Money</h2>
@@ -1196,11 +1519,16 @@
 (function(){
   /* ---------- menu + one section at a time ---------- */
   var SECTIONS=[
-    ['plan','🗺️ Trip plan & weather'],['book','✅ What to book & when'],['rome','🏛️ Rome'],
-    ['sorrento','🍋 Sorrento'],['positano','🏖️ Positano'],['capri','⛵ Capri'],
-    ['tropea','🌶️ Tropea'],['cefalu','⛪ Cefalù'],['home','✈️ Home via Rome'],
-    ['money','💳 Money'],['phone','📱 Phone & data'],['safety','🛡️ Safety'],
-    ['pack','🎒 Packing'],['fx','💱 Currency converter'],['budget','💰 Full budget']
+    ['today','\uD83D\uDDD3\uFE0F Day by day'],['plan','\uD83D\uDDFA\uFE0F Trip plan & weather'],
+    ['book','\u2705 What to book & when'],['notes','\uD83D\uDCDD My bookings'],
+    ['rome','\uD83C\uDFDB\uFE0F Rome'],['sorrento','\uD83C\uDF4B Sorrento'],
+    ['positano','\uD83C\uDFD6\uFE0F Positano'],['capri','\u26F5 Capri'],
+    ['tropea','\uD83C\uDF36\uFE0F Tropea'],['cefalu','\u26EA Cefal\u00F9'],
+    ['home','\u2708\uFE0F Home via Rome'],['phrases','\uD83D\uDCAC Italian phrases'],
+    ['hours','\uD83D\uDD52 What\u2019s shut, and when'],['money','\uD83D\uDCB3 Money'],
+    ['phone','\uD83D\uDCF1 Phone & data'],['safety','\uD83D\uDEE1\uFE0F Safety'],
+    ['pack','\uD83C\uDF92 Packing'],['fx','\uD83D\uDCB1 Currency converter'],
+    ['budget','\uD83D\uDCB0 Full budget']
   ];
   var body=document.body, burger=document.getElementById('burger'),
       scrim=document.getElementById('scrim'), drawer=document.getElementById('drawer'),
@@ -1235,7 +1563,7 @@
   });
 
   function show(id){
-    if(!label(id)) id='plan';
+    if(!label(id)) id='today';
     SECTIONS.forEach(function(s){ var el=document.getElementById(s[0]); if(el){el.classList.toggle('active', s[0]===id);} });
     for(var i=0;i<links.length;i++){ links[i].classList.toggle('on', links[i].getAttribute('href')==='#'+id); }
     where.textContent=label(id);
@@ -1257,13 +1585,13 @@
       toggleAll.textContent='Show one section at a time'; closeMenu();
     }else{
       body.classList.add('solo'); toggleAll.textContent='Show whole guide as one page';
-      var h=(location.hash||'#plan').slice(1); show(label(h)?h:'plan');
+      var h=(location.hash||'#today').slice(1); show(label(h)?h:'today');
     }
   });
 
   body.classList.add('solo');
-  var start=(location.hash||'#plan').slice(1);
-  show(label(start)?start:'plan');
+  var start=(location.hash||'#today').slice(1);
+  show(label(start)?start:'today');
 
   /* ---------- weather ---------- */
   var PLACES=[
@@ -1332,6 +1660,132 @@
   renderFallback('Loading live conditions…');
   loadWeather();
 
+
+  /* ---------- SOS button ---------- */
+  document.getElementById('sosbtn').addEventListener('click',function(e){
+    e.preventDefault();
+    if(body.classList.contains('solo')) show('safety');
+    else document.getElementById('safety').scrollIntoView();
+  });
+
+  /* ---------- day by day: mark today ---------- */
+  (function(){
+    var days=document.querySelectorAll('.day'); if(!days.length) return;
+    var now=new Date();
+    var todayISO=now.getFullYear()+'-'+('0'+(now.getMonth()+1)).slice(-2)+'-'+('0'+now.getDate()).slice(-2);
+    var line=document.getElementById('todayline'), sub=document.getElementById('todaysub');
+    var first=days[0].getAttribute('data-date'), last=days[days.length-1].getAttribute('data-date');
+    var match=null;
+    for(var i=0;i<days.length;i++){
+      var d=days[i].getAttribute('data-date');
+      if(d===todayISO){ days[i].classList.add('is-today'); match=days[i]; }
+      else if(d<todayISO){ days[i].classList.add('is-past'); }
+    }
+    function daysBetween(a,b){ return Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/86400000); }
+    if(match){
+      var h=match.querySelector('h4').textContent;
+      line.textContent='Today \u2014 '+match.querySelector('.ddate').textContent.replace(' \u00B7 TODAY','');
+      sub.textContent=h;
+      setTimeout(function(){ try{ match.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){} },400);
+    } else if(todayISO<first){
+      var n=daysBetween(todayISO,first);
+      line.textContent = n===1 ? 'You fly to Rome tomorrow' : n+' days until Rome';
+      sub.textContent='The trip runs 12 October to 1 November 2026. This page will follow along day by day once you land.';
+    } else {
+      line.textContent='Trip complete';
+      sub.textContent='Hope it was a good one.';
+    }
+  })();
+
+  /* ---------- my bookings: save to this device ---------- */
+  (function(){
+    var fields=document.querySelectorAll('#notes [data-k]');
+    if(!fields.length) return;
+    var state=document.getElementById('savestate');
+    function key(f){ return 'trip_'+f.getAttribute('data-k'); }
+    for(var i=0;i<fields.length;i++){
+      (function(f){
+        try{ var v=localStorage.getItem(key(f)); if(v!==null) f.value=v; }catch(e){}
+        var t;
+        f.addEventListener('input',function(){
+          clearTimeout(t);
+          t=setTimeout(function(){
+            try{ localStorage.setItem(key(f),f.value); if(state) state.textContent='Saved.'; }
+            catch(e){ if(state) state.textContent='Could not save \u2014 private browsing?'; }
+          },300);
+        });
+      })(fields[i]);
+    }
+    var ex=document.getElementById('exportnotes');
+    if(ex) ex.addEventListener('click',function(){
+      var out=[];
+      var cards=document.querySelectorAll('#notes .bk');
+      for(var i=0;i<cards.length;i++){
+        var name=cards[i].querySelector('.bkhd b').textContent;
+        var dates=cards[i].querySelector('.bkhd span').textContent;
+        var ins=cards[i].querySelectorAll('input');
+        var vals=[]; for(var j=0;j<ins.length;j++){ if(ins[j].value) vals.push(ins[j].value); }
+        if(vals.length) out.push(name+' ('+dates+'): '+vals.join(' \u00B7 '));
+      }
+      var rows=document.querySelectorAll('#notes .bkrow');
+      for(var k=0;k<rows.length;k++){
+        var inp=rows[k].querySelector('input');
+        if(inp && inp.value) out.push(rows[k].querySelector('label').textContent+': '+inp.value);
+      }
+      var ta=document.querySelector('#notes textarea');
+      if(ta && ta.value) out.push('\nNotes: '+ta.value);
+      var text=out.length? 'MY ITALY BOOKINGS\n\n'+out.join('\n') : 'Nothing saved yet.';
+      function done(){ ex.textContent='Copied \u2713'; setTimeout(function(){ex.textContent='Copy everything to clipboard'},1800); }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done,function(){ window.prompt('Copy this:',text); });
+      } else { window.prompt('Copy this:',text); }
+    });
+    var cl=document.getElementById('clearnotes');
+    if(cl) cl.addEventListener('click',function(){
+      if(!window.confirm('Clear every saved booking detail on this device?')) return;
+      for(var i=0;i<fields.length;i++){
+        fields[i].value='';
+        try{ localStorage.removeItem(key(fields[i])); }catch(e){}
+      }
+      if(state) state.textContent='Cleared.';
+    });
+  })();
+
+  /* ---------- search ---------- */
+  (function(){
+    var q=document.getElementById('q'), res=document.getElementById('qres');
+    if(!q||!res) return;
+    var index=SECTIONS.map(function(s){
+      var el=document.getElementById(s[0]);
+      return {id:s[0], label:s[1], text:(el? el.textContent:'').toLowerCase()};
+    });
+    function run(){
+      var term=q.value.trim().toLowerCase();
+      res.innerHTML='';
+      if(term.length<2) return;
+      var hits=0;
+      index.forEach(function(s){
+        var pos=s.text.indexOf(term);
+        if(pos<0) return;
+        hits++;
+        var snip=s.text.substr(Math.max(0,pos-30),90).replace(/\s+/g,' ').trim();
+        var a=document.createElement('a');
+        a.className='qhit'; a.href='#'+s.id;
+        a.innerHTML='<b>'+s.label+'</b><span>\u2026'+snip.replace(
+          new RegExp('('+term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','i'),'<mark>$1</mark>')+'\u2026</span>';
+        a.addEventListener('click',function(e){
+          if(body.classList.contains('solo')){ e.preventDefault(); show(s.id); }
+          else { closeMenu(); }
+          q.value=''; res.innerHTML='';
+        });
+        res.appendChild(a);
+      });
+      if(!hits) res.innerHTML='<p class="qnone">Nothing found for \u201C'+q.value+'\u201D</p>';
+    }
+    q.addEventListener('input',run);
+    q.addEventListener('search',run);
+  })();
+
   /* ---------- currency converter ---------- */
   var rate=document.getElementById('rate'), eur=document.getElementById('eur'), aud=document.getElementById('aud');
   function num(v){var x=parseFloat(String(v).replace(',','.'));return isNaN(x)?0:x}
@@ -1348,6 +1802,15 @@
   }
   fromEur();
 })();
+</script>
+
+<script>
+/* offline support: cache the guide so it works with no signal in Italy */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function () { /* fine without it */ });
+  });
+}
 </script>
 
 </body>
