@@ -1,5 +1,5 @@
 /* Italy trip guide - offline service worker */
-const CACHE = 'italy-trip-v6';
+const CACHE = 'italy-trip-v7';
 const ASSETS = [
   './',
   './index.html',
