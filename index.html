@@ -1603,7 +1603,120 @@
       <li><b>An e-bike on Favignana</b> <span class="pr">+€10/day</span><span class="d">Unlocks the hilly western half — Cala Rotonda and the lighthouse at Punta Sottile.</span></li>
       <li><b>Three very good dinners</b> <span class="pr">€35–50pp</span><span class="d">Roscioli in Rome, Ai Cascinari in Palermo, and whatever is open and full of locals on Favignana.</span></li>
     </ul>
-  </div>';
+  </div>
+</section>
+
+<p class="foot">Researched and compiled August–September 2026 from official ticketing sites, ferry and rail operators, and live availability. Ticket prices are published 2026 rates; hotel prices are live quotes for these dates — check before booking. Re-verify the load-bearing connections (InterCity 723, the Favignana hydrofoil, the 31 October flight) about two weeks out. Photos from Wikimedia Commons under the licences shown; illustrations and maps drawn for this guide. Buon viaggio, Bradley 🍋</p>
+</div>
+
+<script>
+(function(){
+  /* ---------- menu + one section at a time ---------- */
+  var SECTIONS=[
+    ['today','\uD83D\uDDD3\uFE0F Day by day'],['plan','\uD83D\uDDFA\uFE0F Trip plan & weather'],
+    ['book','\u2705 What to book & when'],['notes','\uD83D\uDCDD My bookings'],
+    ['rome','\uD83C\uDFDB\uFE0F Rome'],['sorrento','\uD83C\uDF4B Sorrento'],
+    ['tropea','\uD83C\uDF36\uFE0F Tropea'],['cefalu','\u26EA Cefal\u00F9'],
+    ['palermo','\uD83C\uDFAD Palermo'],['favignana','\uD83D\uDEB2 Favignana'],
+    ['home','\u2708\uFE0F Home via Rome'],['phrases','\uD83D\uDCAC Italian phrases'],
+    ['hours','\uD83D\uDD52 What\u2019s shut, and when'],['money','\uD83D\uDCB3 Money'],
+    ['phone','\uD83D\uDCF1 Phone & data'],['safety','\uD83D\uDEE1\uFE0F Safety'],
+    ['pack','\uD83C\uDF92 Packing'],['fx','\uD83D\uDCB1 Currency converter'],
+    ['budget','\uD83D\uDCB0 Full budget']
+  ];
+  var body=document.body, burger=document.getElementById('burger'),
+      scrim=document.getElementById('scrim'), drawer=document.getElementById('drawer'),
+      closeBtn=document.getElementById('closemenu'), where=document.getElementById('where'),
+      toggleAll=document.getElementById('toggleall'), links=drawer.querySelectorAll('a.mi');
+
+  SECTIONS.forEach(function(s){ var el=document.getElementById(s[0]); if(el){el.classList.add('page');} });
+
+  function openMenu(){body.classList.add('menuopen'); burger.setAttribute('aria-expanded','true');}
+  function closeMenu(){body.classList.remove('menuopen'); burger.setAttribute('aria-expanded','false');}
+  burger.addEventListener('click',function(){ body.classList.contains('menuopen')?closeMenu():openMenu(); });
+  scrim.addEventListener('click',closeMenu);
+  closeBtn.addEventListener('click',closeMenu);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape')closeMenu(); });
+
+  function label(id){ for(var i=0;i<SECTIONS.length;i++){ if(SECTIONS[i][0]===id) return SECTIONS[i][1]; } return ''; }
+
+  SECTIONS.forEach(function(s,i){
+    var el=document.getElementById(s[0]); if(!el)return;
+    var nav=document.createElement('div'); nav.className='pagenav';
+    if(i>0){ var p=document.createElement('a'); p.href='#'+SECTIONS[i-1][0];
+      p.textContent='← '+SECTIONS[i-1][1].replace(/^\S+\s/,''); nav.appendChild(p); }
+    if(i<SECTIONS.length-1){ var n=document.createElement('a'); n.href='#'+SECTIONS[i+1][0];
+      n.textContent=SECTIONS[i+1][1].replace(/^\S+\s/,'')+' →'; nav.appendChild(n); }
+    el.appendChild(nav);
+    var kids=nav.querySelectorAll('a');
+    for(var k=0;k<kids.length;k++){
+      kids[k].addEventListener('click',function(e){
+        if(body.classList.contains('solo')){ e.preventDefault(); show(this.getAttribute('href').slice(1)); }
+      });
+    }
+  });
+
+  function show(id){
+    if(!label(id)) id='today';
+    SECTIONS.forEach(function(s){ var el=document.getElementById(s[0]); if(el){el.classList.toggle('active', s[0]===id);} });
+    for(var i=0;i<links.length;i++){ links[i].classList.toggle('on', links[i].getAttribute('href')==='#'+id); }
+    where.textContent=label(id);
+    try{history.replaceState(null,'','#'+id);}catch(e){}
+    window.scrollTo(0,0);
+    closeMenu();
+  }
+
+  for(var i=0;i<links.length;i++){
+    links[i].addEventListener('click',function(e){
+      if(body.classList.contains('solo')){ e.preventDefault(); show(this.getAttribute('href').slice(1)); }
+      else{ closeMenu(); }
+    });
+  }
+
+  toggleAll.addEventListener('click',function(){
+    if(body.classList.contains('solo')){
+      body.classList.remove('solo'); where.textContent='Whole guide';
+      toggleAll.textContent='Show one section at a time'; closeMenu();
+    }else{
+      body.classList.add('solo'); toggleAll.textContent='Show whole guide as one page';
+      var h=(location.hash||'#today').slice(1); show(label(h)?h:'today');
+    }
+  });
+
+  body.classList.add('solo');
+  var start=(location.hash||'#today').slice(1);
+  show(label(start)?start:'today');
+
+  /* ---------- weather ---------- */
+  var PLACES=[
+    {n:'Rome',      d:'12\u201316 Oct',  lat:41.9028, lon:12.4964, avg:'22\u00B0 / 13\u00B0'},
+    {n:'Sorrento',  d:'16\u201319 Oct',  lat:40.6263, lon:14.3757, avg:'22\u00B0 / 15\u00B0'},
+    {n:'Tropea',    d:'19\u201322 Oct',  lat:38.6768, lon:15.8972, avg:'21\u00B0 / 14\u00B0'},
+    {n:'Cefal\u00F9',    d:'22\u201323 Oct',  lat:38.0397, lon:14.0222, avg:'23\u00B0 / 16\u00B0'},
+    {n:'Palermo',   d:'23\u201327 Oct',  lat:38.1157, lon:13.3615, avg:'23\u00B0 / 16\u00B0'},
+    {n:'Favignana', d:'27\u201331 Oct',  lat:37.9319, lon:12.3283, avg:'23\u00B0 / 16\u00B0'}
+  ];
+  function icon(c){
+    if(c===0) return ['☀️','Clear'];
+    if(c===1) return ['🌤️','Mostly sunny'];
+    if(c===2) return ['⛅','Partly cloudy'];
+    if(c===3) return ['☁️','Cloudy'];
+    if(c===45||c===48) return ['🌫️','Fog'];
+    if(c>=51&&c<=57) return ['🌦️','Drizzle'];
+    if(c>=61&&c<=67) return ['🌧️','Rain'];
+    if(c>=71&&c<=77) return ['🌨️','Snow'];
+    if(c>=80&&c<=82) return ['🌦️','Showers'];
+    if(c>=95) return ['⛈️','Storms'];
+    return ['🌡️',''];
+  }
+  var wxEl=document.getElementById('wx'), wxNote=document.getElementById('wxnote'),
+      wxBtn=document.getElementById('wxrefresh');
+
+  function renderFallback(msg){
+    var h='';
+    PLACES.forEach(function(p){
+      h+='<div class="wxrow"><div class="ic">📅</div><div class="pl"><b>'+p.n+'</b><span>'+p.d+'</span></div>'+
+         '<div class="tm"><b>'+p.avg+'</b><span>October average</span></div></div>';
     });
     wxEl.innerHTML=h;
     wxNote.textContent=msg||'Showing typical October conditions — live weather needs a connection.';
