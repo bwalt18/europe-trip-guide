@@ -300,6 +300,17 @@
     flex:none; width:22px; height:22px; margin-top:2px; accent-color:var(--good); cursor:pointer}
   ul.bklist .bktext{flex:1; font-size:14.5px; line-height:1.55}
   ul.bklist li.done .bktext{opacity:.5; text-decoration:line-through; text-decoration-color:var(--muted)}
+  /* per-day booked timeslots */
+  .dtime{display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:var(--chip); border:1.5px dashed var(--line); border-radius:9px;
+    padding:8px 10px; margin:8px 0; font-size:13.5px}
+  .dtime label{color:var(--muted); font-weight:600; flex:1; min-width:0}
+  .dtime input{flex:none; width:96px; text-align:center; font:inherit; font-weight:700; font-size:14.5px;
+    padding:6px 6px; border:1.5px solid var(--line); border-radius:8px; background:var(--card); color:var(--ink)}
+  .dtime input:focus{outline:2px solid var(--sea); border-color:var(--sea)}
+  .dtime.has-time{background:var(--good-soft); border-style:solid; border-color:var(--good)}
+  .dtime.has-time label{color:var(--ink)}
+  .dtime.has-time label::before{content:"\2713 "; color:var(--good); font-weight:800}
   .foot{color:var(--muted); font-size:12.5px; margin-top:36px; border-top:1px solid var(--line); padding-top:14px}
   .big{font-size:19px; font-weight:700}
 </style>
@@ -348,6 +359,7 @@
 <!-- ============ DAY BY DAY ============ -->
 <section id="today">
   <h2 class="sect">Day by day</h2>
+  <p class="lede" style="margin:2px 0 12px">Some days have a dashed box for the actual time you booked — fill it in once you have it, and it turns green and stays saved on this phone.</p>
   <div class="card" id="todaycard">
     <p class="big" id="todayline" style="margin:0 0 2px">Loading&hellip;</p>
     <p class="lede" id="todaysub" style="margin:0"></p>
@@ -361,27 +373,27 @@
   <div class="day" data-date="2026-10-13">
    <div class="dhd"><span class="ddate">Tue 13 Oct</span><span class="dsleep">Rome</span></div>
    <h4>Ancient Rome</h4>
-   <p><b>Colosseum</b> on your booked slot (go 8:30), then the <b>Forum</b> and up <b>Palatine Hill</b> &mdash; same ticket, 24 hours. Lunch at Supplizio. Afternoon: San Clemente&rsquo;s three stacked churches. Evening: <b>Trevi after 10pm</b>, free and half empty.</p>
+   <div class="dtime" data-dt-row="colosseum"><label for="dt_colosseum">🎫 Colosseum entry</label><input type="text" inputmode="numeric" id="dt_colosseum" data-dt="colosseum" placeholder="e.g. 09:15" autocomplete="off"></div><p><b>Colosseum</b> on your booked slot (go 8:30), then the <b>Forum</b> and up <b>Palatine Hill</b> &mdash; same ticket, 24 hours. Lunch at Supplizio. Afternoon: San Clemente&rsquo;s three stacked churches. Evening: <b>Trevi after 10pm</b>, free and half empty.</p>
   </div>
   <div class="day flag-info" data-date="2026-10-14">
    <div class="dhd"><span class="ddate">Wed 14 Oct</span><span class="dsleep">Rome</span></div>
    <h4>The Vatican</h4>
-   <p>Museums early on your booked slot, finish at the Sistine Chapel, then St Peter&rsquo;s. Lunch at Pizzarium, five minutes from the exit. <b>Heads up:</b> Wednesday is the papal audience &mdash; St Peter&rsquo;s Square is closed off much of the morning. Museums first, Basilica after 1pm.</p>
+   <div class="dtime" data-dt-row="vatican"><label for="dt_vatican">🎫 Vatican Museums entry</label><input type="text" inputmode="numeric" id="dt_vatican" data-dt="vatican" placeholder="e.g. 08:15" autocomplete="off"></div><p>Museums early on your booked slot, finish at the Sistine Chapel, then St Peter&rsquo;s. Lunch at Pizzarium, five minutes from the exit. <b>Heads up:</b> Wednesday is the papal audience &mdash; St Peter&rsquo;s Square is closed off much of the morning. Museums first, Basilica after 1pm.</p>
   </div>
   <div class="day" data-date="2026-10-15">
    <div class="dhd"><span class="ddate">Thu 15 Oct</span><span class="dsleep">Rome</span></div>
    <h4>Baroque and Caravaggio</h4>
-   <p><b>Borghese Gallery</b> on your timed slot &mdash; Bernini&rsquo;s sculptures, the best two hours in Rome. Walk back through the gardens. Afternoon: Pantheon, San Luigi dei Francesi for the Caravaggios (<b>shut 12:45&ndash;14:30</b>), Santa Maria sopra Minerva. Dinner in Trastevere.</p>
+   <div class="dtime" data-dt-row="borghese"><label for="dt_borghese">🎫 Borghese Gallery slot</label><input type="text" inputmode="numeric" id="dt_borghese" data-dt="borghese" placeholder="e.g. 11:00" autocomplete="off"></div><p><b>Borghese Gallery</b> on your timed slot &mdash; Bernini&rsquo;s sculptures, the best two hours in Rome. Walk back through the gardens. Afternoon: Pantheon, San Luigi dei Francesi for the Caravaggios (<b>shut 12:45&ndash;14:30</b>), Santa Maria sopra Minerva. Dinner in Trastevere.</p>
   </div>
   <div class="day" data-date="2026-10-16">
    <div class="dhd"><span class="ddate">Fri 16 Oct</span><span class="dsleep">Sorrento</span></div>
    <h4>Rome to Sorrento</h4>
-   <p>Morning train to Naples (1h10, pre-booked), then <b>Campania Express</b> to Sorrento (&euro;15, seat and luggage space). Afternoon: settle in, down to Marina Grande, sunset from the Villa Comunale gardens.</p>
+   <div class="dtime" data-dt-row="train_naples"><label for="dt_train_naples">🚆 Train to Naples</label><input type="text" inputmode="numeric" id="dt_train_naples" data-dt="train_naples" placeholder="e.g. 09:35" autocomplete="off"></div><p>Morning train to Naples (1h10, pre-booked), then <b>Campania Express</b> to Sorrento (&euro;15, seat and luggage space). Afternoon: settle in, down to Marina Grande, sunset from the Villa Comunale gardens.</p>
   </div>
   <div class="day" data-date="2026-10-17">
    <div class="dhd"><span class="ddate">Sat 17 Oct</span><span class="dsleep">Sorrento</span></div>
    <h4>Pompeii</h4>
-   <p>Early train to <b>Pompei Scavi</b> (~30 min, station 100 m from the gate). Your 9am slot &mdash; <b>carry your passport</b>, the ticket is named. Allow 4&ndash;6 hours; it is a whole city with almost no shade. Back for a late lunch and a swim if the sun holds.</p>
+   <div class="dtime" data-dt-row="pompeii"><label for="dt_pompeii">🎫 Pompeii entry</label><input type="text" inputmode="numeric" id="dt_pompeii" data-dt="pompeii" placeholder="e.g. 09:00" autocomplete="off"></div><p>Early train to <b>Pompei Scavi</b> (~30 min, station 100 m from the gate). Your 9am slot &mdash; <b>carry your passport</b>, the ticket is named. Allow 4&ndash;6 hours; it is a whole city with almost no shade. Back for a late lunch and a swim if the sun holds.</p>
   </div>
   <div class="day flag-go" data-date="2026-10-18">
    <div class="dhd"><span class="ddate">Sun 18 Oct</span><span class="dsleep">Sorrento</span></div>
@@ -391,27 +403,27 @@
   <div class="day" data-date="2026-10-19">
    <div class="dhd"><span class="ddate">Mon 19 Oct</span><span class="dsleep">Tropea</span></div>
    <h4>Sorrento to Tropea</h4>
-   <p>A long one, ~6&ndash;7 h. Circumvesuviana to Naples, then train to Lamezia Terme, then the regional down to Tropea. Book the Naples&ndash;Lamezia leg early &mdash; it is &euro;20&ndash;45 in advance and much more on the day. Eat properly before the last leg.</p>
+   <div class="dtime" data-dt-row="train_tropea"><label for="dt_train_tropea">🚆 Train towards Tropea</label><input type="text" inputmode="numeric" id="dt_train_tropea" data-dt="train_tropea" placeholder="e.g. 08:20" autocomplete="off"></div><p>A long one, ~6&ndash;7 h. Circumvesuviana to Naples, then train to Lamezia Terme, then the regional down to Tropea. Book the Naples&ndash;Lamezia leg early &mdash; it is &euro;20&ndash;45 in advance and much more on the day. Eat properly before the last leg.</p>
   </div>
   <div class="day flag-go" data-date="2026-10-20">
    <div class="dhd"><span class="ddate">Tue 20 Oct</span><span class="dsleep">Tropea</span></div>
    <h4>The Aeolian Islands &mdash; Stromboli</h4>
-   <p><b>Book this before anything else.</b> Leaves Tropea 14:00, back ~22:30: three and a half hours ashore on Stromboli, then after dark the boat rounds the Sciara del Fuoco to watch lava run into the sea. <b>&euro;70</b> direct at tropea.biz. The season ends 24 October, so this is one of the last sailings. Take a jacket.</p>
+   <div class="dtime" data-dt-row="aeolian1"><label for="dt_aeolian1">⛴ Aeolian boat, Tropea port</label><input type="text" inputmode="numeric" id="dt_aeolian1" data-dt="aeolian1" placeholder="e.g. 14:00" autocomplete="off"></div><p><b>Book this before anything else.</b> Leaves Tropea 14:00, back ~22:30: three and a half hours ashore on Stromboli, then after dark the boat rounds the Sciara del Fuoco to watch lava run into the sea. <b>&euro;70</b> direct at tropea.biz. The season ends 24 October, so this is one of the last sailings. Take a jacket.</p>
   </div>
   <div class="day" data-date="2026-10-21">
    <div class="dhd"><span class="ddate">Wed 21 Oct</span><span class="dsleep">Tropea</span></div>
    <h4>Tropea</h4>
-   <p>Slow day. Santa Maria dell&rsquo;Isola late afternoon when the light is good (church free, rooftop &euro;3). The belvederes along Corso Vittorio Emanuele. White-sand beaches, free and empty, sea still ~22&deg;C. Gelato at Tonino &mdash; the Tropea red onion flavour is not a joke. <i>(If the boat did not run yesterday, today is your second chance.)</i></p>
+   <div class="dtime" data-dt-row="aeolian2"><label for="dt_aeolian2">⛴ Aeolian boat (if moved here)</label><input type="text" inputmode="numeric" id="dt_aeolian2" data-dt="aeolian2" placeholder="leave blank if not needed" autocomplete="off"></div><p>Slow day. Santa Maria dell&rsquo;Isola late afternoon when the light is good (church free, rooftop &euro;3). The belvederes along Corso Vittorio Emanuele. White-sand beaches, free and empty, sea still ~22&deg;C. Gelato at Tonino &mdash; the Tropea red onion flavour is not a joke. <i>(If the boat did not run yesterday, today is your second chance.)</i></p>
   </div>
   <div class="day" data-date="2026-10-22">
    <div class="dhd"><span class="ddate">Thu 22 Oct</span><span class="dsleep">Cefal&ugrave;</span></div>
    <h4>Tropea to Cefal&ugrave; &mdash; your train rides a ferry</h4>
-   <p>Regional to Villa San Giovanni, then <b>InterCity 723</b> (~14:25): the carriages are loaded onto a ferry and you cross the Strait of Messina by sea. Stay in your seat or go up on deck and watch Sicily arrive. Cefal&ugrave; 18:24, so it is dark when you land &mdash; drop the bag and go straight to dinner. Book La Brace ahead.</p>
+   <div class="dtime" data-dt-row="ic723"><label for="dt_ic723">🚆 InterCity 723, Villa S.G.</label><input type="text" inputmode="numeric" id="dt_ic723" data-dt="ic723" placeholder="e.g. 14:25" autocomplete="off"></div><p>Regional to Villa San Giovanni, then <b>InterCity 723</b> (~14:25): the carriages are loaded onto a ferry and you cross the Strait of Messina by sea. Stay in your seat or go up on deck and watch Sicily arrive. Cefal&ugrave; 18:24, so it is dark when you land &mdash; drop the bag and go straight to dinner. Book La Brace ahead.</p>
   </div>
   <div class="day" data-date="2026-10-23">
    <div class="dhd"><span class="ddate">Fri 23 Oct</span><span class="dsleep">Palermo</span></div>
    <h4>Cefal&ugrave;, then on to Palermo</h4>
-   <p><b>La Rocca first thing</b> &mdash; 45&ndash;60 min of steps, closed shoes required, and the whole coast from the top. Then the Duomo&rsquo;s Pantocrator mosaic and the medieval washhouse. The <b>&euro;10 SIBAC pass</b> covers the rock, the museum and three more. Lunch, a last swim off the town beach, then the evening train to Palermo (~1 h, &euro;7.50).</p>
+   <div class="dtime" data-dt-row="train_palermo"><label for="dt_train_palermo">🚆 Train to Palermo</label><input type="text" inputmode="numeric" id="dt_train_palermo" data-dt="train_palermo" placeholder="e.g. 09:10" autocomplete="off"></div><p><b>La Rocca first thing</b> &mdash; 45&ndash;60 min of steps, closed shoes required, and the whole coast from the top. Then the Duomo&rsquo;s Pantocrator mosaic and the medieval washhouse. The <b>&euro;10 SIBAC pass</b> covers the rock, the museum and three more. Lunch, a last swim off the town beach, then the evening train to Palermo (~1 h, &euro;7.50).</p>
   </div>
   <div class="day" data-date="2026-10-24">
    <div class="dhd"><span class="ddate">Sat 24 Oct</span><span class="dsleep">Palermo</span></div>
@@ -421,7 +433,7 @@
   <div class="day flag-go" data-date="2026-10-25">
    <div class="dhd"><span class="ddate">Sun 25 Oct</span><span class="dsleep">Palermo</span></div>
    <h4>Mondello, and Rigoletto</h4>
-   <p><b>Clocks went back overnight</b> &mdash; an hour in hand, but dark by six from now on. Sunday is Palermo&rsquo;s worst day for monuments, so go to the sea instead. Bus <b>812</b> up Monte Pellegrino for the view, then <b>806</b> out to <b>Mondello</b>: a curve of white sand under the mountain with a Liberty-style pavilion on stilts. Sea is ~22&deg;C. <b>Then the night of the trip:</b> Verdi&rsquo;s Rigoletto at the Teatro Massimo, with Ludovic T&eacute;zier in the title role. Seats from &euro;27.</p>
+   <div class="dtime" data-dt-row="rigoletto"><label for="dt_rigoletto">🎭 Rigoletto, Teatro Massimo</label><input type="text" inputmode="numeric" id="dt_rigoletto" data-dt="rigoletto" placeholder="e.g. 20:00" autocomplete="off"></div><p><b>Clocks went back overnight</b> &mdash; an hour in hand, but dark by six from now on. Sunday is Palermo&rsquo;s worst day for monuments, so go to the sea instead. Bus <b>812</b> up Monte Pellegrino for the view, then <b>806</b> out to <b>Mondello</b>: a curve of white sand under the mountain with a Liberty-style pavilion on stilts. Sea is ~22&deg;C. <b>Then the night of the trip:</b> Verdi&rsquo;s Rigoletto at the Teatro Massimo, with Ludovic T&eacute;zier in the title role. Seats from &euro;27.</p>
   </div>
   <div class="day" data-date="2026-10-26">
    <div class="dhd"><span class="ddate">Mon 26 Oct</span><span class="dsleep">Palermo</span></div>
@@ -431,7 +443,7 @@
   <div class="day" data-date="2026-10-27">
    <div class="dhd"><span class="ddate">Tue 27 Oct</span><span class="dsleep">Favignana</span></div>
    <h4>Palermo to Favignana</h4>
-   <p><b>Segesta bus</b> to Trapani (&euro;9.60, 2 h) from Piazzetta Cairoli right behind Palermo Centrale &mdash; not the train, that line has been shut since 2013 and the detour takes five hours. The bus drops you at Trapani <b>port</b>, which is where the hydrofoils go from. Then ~30 minutes across to <b>Favignana</b>. Hire a bike when you land.</p>
+   <div class="dtime" data-dt-row="coach_trapani"><label for="dt_coach_trapani">🚌 Coach Palermo→Trapani</label><input type="text" inputmode="numeric" id="dt_coach_trapani" data-dt="coach_trapani" placeholder="e.g. 08:00" autocomplete="off"></div><div class="dtime" data-dt-row="hydrofoil_out"><label for="dt_hydrofoil_out">⛴ Hydrofoil Trapani→Favignana</label><input type="text" inputmode="numeric" id="dt_hydrofoil_out" data-dt="hydrofoil_out" placeholder="e.g. 10:30" autocomplete="off"></div><p><b>Segesta bus</b> to Trapani (&euro;9.60, 2 h) from Piazzetta Cairoli right behind Palermo Centrale &mdash; not the train, that line has been shut since 2013 and the detour takes five hours. The bus drops you at Trapani <b>port</b>, which is where the hydrofoils go from. Then ~30 minutes across to <b>Favignana</b>. Hire a bike when you land.</p>
   </div>
   <div class="day" data-date="2026-10-28">
    <div class="dhd"><span class="ddate">Wed 28 Oct</span><span class="dsleep">Favignana</span></div>
@@ -451,12 +463,12 @@
   <div class="day flag-warn" data-date="2026-10-31">
    <div class="dhd"><span class="ddate">Sat 31 Oct</span><span class="dsleep">Rome</span></div>
    <h4>Favignana to Rome</h4>
-   <p>Ferry back to Trapani, then on to Rome. <b>Take a morning sailing</b>, not the last one &mdash; this is the leg with the most moving parts and it is the day before you fly home. Evening in Rome: last carbonara, and repack.</p>
+   <div class="dtime" data-dt-row="hydrofoil_back"><label for="dt_hydrofoil_back">⛴ Hydrofoil Favignana→Trapani</label><input type="text" inputmode="numeric" id="dt_hydrofoil_back" data-dt="hydrofoil_back" placeholder="e.g. 08:30" autocomplete="off"></div><div class="dtime" data-dt-row="coach_airport"><label for="dt_coach_airport">🚌 Coach Trapani→Palermo airport</label><input type="text" inputmode="numeric" id="dt_coach_airport" data-dt="coach_airport" placeholder="e.g. 10:00" autocomplete="off"></div><p>Ferry back to Trapani, then on to Rome. <b>Take a morning sailing</b>, not the last one &mdash; this is the leg with the most moving parts and it is the day before you fly home. Evening in Rome: last carbonara, and repack.</p>
   </div>
   <div class="day flag-info" data-date="2026-11-01">
    <div class="dhd"><span class="ddate">Sun 1 Nov</span><span class="dsleep">&rarr; home</span></div>
    <h4>Fly home</h4>
-   <p><b>All Saints&rsquo; Day.</b> The Vatican is closed, but state museums including the Colosseum are <b>free</b> this morning if you have hours to spare &mdash; crowded, though. Leonardo Express to FCO (&euro;14, every 15 min); allow three hours. Sunday timetable, so leave a little extra.</p>
+   <div class="dtime" data-dt-row="flight_home"><label for="dt_flight_home">✈ Flight home, departs</label><input type="text" inputmode="numeric" id="dt_flight_home" data-dt="flight_home" placeholder="e.g. 11:00" autocomplete="off"></div><p><b>All Saints&rsquo; Day.</b> The Vatican is closed, but state museums including the Colosseum are <b>free</b> this morning if you have hours to spare &mdash; crowded, though. Leonardo Express to FCO (&euro;14, every 15 min); allow three hours. Sunday timetable, so leave a little extra.</p>
   </div>
   </div>
   <p class="lede" style="margin-top:12px">Every stop has its own section with the bookings, hotels and food &mdash; tap &#9776; to jump there.</p>
@@ -1882,6 +1894,32 @@
       refresh();
     });
     refresh();
+  })();
+
+
+  /* ---------- per-day booked timeslots ---------- */
+  (function(){
+    var inputs=document.querySelectorAll('#today [data-dt]');
+    if(!inputs.length) return;
+    function key(el){ return 'trip_dt_'+el.getAttribute('data-dt'); }
+    function paint(el){
+      var row=el.closest('.dtime');
+      if(row) row.classList.toggle('has-time', el.value.trim().length>0);
+    }
+    for(var i=0;i<inputs.length;i++){
+      (function(el){
+        try{ var v=localStorage.getItem(key(el)); if(v!==null) el.value=v; }catch(e){}
+        paint(el);
+        var t;
+        el.addEventListener('input', function(){
+          paint(el);
+          clearTimeout(t);
+          t=setTimeout(function(){
+            try{ localStorage.setItem(key(el), el.value); }catch(e){}
+          },300);
+        });
+      })(inputs[i]);
+    }
   })();
 
   /* ---------- my bookings: save to this device ---------- */
