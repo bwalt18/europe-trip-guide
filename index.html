@@ -311,6 +311,11 @@
   .dtime.has-time{background:var(--good-soft); border-style:solid; border-color:var(--good)}
   .dtime.has-time label{color:var(--ink)}
   .dtime.has-time label::before{content:"\2713 "; color:var(--good); font-weight:800}
+  /* free-day custom bookings: two-field rows */
+  .dtime.dcustom{align-items:center; gap:8px}
+  .dc-check{flex:none; width:13px; color:var(--good); font-weight:800; font-size:14px; text-align:center}
+  .dtime.dcustom .dcw{flex:1; min-width:0; width:auto; text-align:left; font-weight:600}
+  .dtime.dcustom .dcwhen{flex:none; width:62px}
   .foot{color:var(--muted); font-size:12.5px; margin-top:36px; border-top:1px solid var(--line); padding-top:14px}
   .big{font-size:19px; font-weight:700}
 </style>
@@ -359,7 +364,7 @@
 <!-- ============ DAY BY DAY ============ -->
 <section id="today">
   <h2 class="sect">Day by day</h2>
-  <p class="lede" style="margin:2px 0 12px">Some days have a dashed box for the actual time you booked — fill it in once you have it, and it turns green and stays saved on this phone.</p>
+  <p class="lede" style="margin:2px 0 12px">Some days have a dashed box for the actual time you booked — fill it in once you have it, and it turns green and stays saved on this phone. On the open days, type in whatever you end up booking and it does the same.</p>
   <div class="card" id="todaycard">
     <p class="big" id="todayline" style="margin:0 0 2px">Loading&hellip;</p>
     <p class="lede" id="todaysub" style="margin:0"></p>
@@ -398,7 +403,7 @@
   <div class="day flag-go" data-date="2026-10-18">
    <div class="dhd"><span class="ddate">Sun 18 Oct</span><span class="dsleep">Sorrento</span></div>
    <h4>Your extra Sorrento day</h4>
-   <p>The day the longer stay buys you. Pick one: <b>Herculaneum</b> (&euro;16 &mdash; smaller than Pompeii but far better preserved, wooden doors and upper floors still standing), <b>Vesuvius</b> to walk the crater rim (&euro;10 + bus), or <b>Naples</b> for the Veiled Christ, Caravaggio at Pio Monte, and pizza at Da Michele. Or do none of it and take the boat along the coast.</p>
+   <div class="dtime dcustom" data-dc-row="c_2026-10-18_1"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-18_1_what" placeholder="e.g. Herculaneum, Vesuvius or Naples" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-18_1_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><div class="dtime dcustom" data-dc-row="c_2026-10-18_2"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-18_2_what" placeholder="Anything else booked today?" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-18_2_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><p>The day the longer stay buys you. Pick one: <b>Herculaneum</b> (&euro;16 &mdash; smaller than Pompeii but far better preserved, wooden doors and upper floors still standing), <b>Vesuvius</b> to walk the crater rim (&euro;10 + bus), or <b>Naples</b> for the Veiled Christ, Caravaggio at Pio Monte, and pizza at Da Michele. Or do none of it and take the boat along the coast.</p>
   </div>
   <div class="day" data-date="2026-10-19">
    <div class="dhd"><span class="ddate">Mon 19 Oct</span><span class="dsleep">Tropea</span></div>
@@ -428,7 +433,7 @@
   <div class="day" data-date="2026-10-24">
    <div class="dhd"><span class="ddate">Sat 24 Oct</span><span class="dsleep">Palermo</span></div>
    <h4>Palermo proper</h4>
-   <p><b>La Martorana first</b> (&euro;2, mornings only, and shut Mondays &mdash; so it has to be today). The best mosaics-per-euro in Sicily; San Cataldo next door. Then <b>Cappella Palatina</b> (&euro;19, last entry 15:45) and the Cathedral rooftops. Afternoon: Palazzo Abatellis or Palazzo Butera in the Kalsa, both shut tomorrow&rsquo;s alternative day. Street food all the way through: panelle, sfincione, arancine.</p>
+   <div class="dtime dcustom" data-dc-row="c_2026-10-24_1"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-24_1_what" placeholder="e.g. Palazzo Abatellis, dinner booking" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-24_1_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><div class="dtime dcustom" data-dc-row="c_2026-10-24_2"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-24_2_what" placeholder="Anything else?" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-24_2_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><p><b>La Martorana first</b> (&euro;2, mornings only, and shut Mondays &mdash; so it has to be today). The best mosaics-per-euro in Sicily; San Cataldo next door. Then <b>Cappella Palatina</b> (&euro;19, last entry 15:45) and the Cathedral rooftops. Afternoon: Palazzo Abatellis or Palazzo Butera in the Kalsa, both shut tomorrow&rsquo;s alternative day. Street food all the way through: panelle, sfincione, arancine.</p>
   </div>
   <div class="day flag-go" data-date="2026-10-25">
    <div class="dhd"><span class="ddate">Sun 25 Oct</span><span class="dsleep">Palermo</span></div>
@@ -438,7 +443,7 @@
   <div class="day" data-date="2026-10-26">
    <div class="dhd"><span class="ddate">Mon 26 Oct</span><span class="dsleep">Palermo</span></div>
    <h4>Monreale and the Catacombs</h4>
-   <p>The right day for this, because everything else is shut on a Monday. <b>Capuchin Catacombs at 09:00</b> &mdash; 8,000 mummified Palermitans still in their clothes; it closes 12:30&ndash;15:00, so go first. Then walk to Piazza Indipendenza and take bus <b>389</b> up to <b>Monreale</b>: 6,500 m&sup2; of gold mosaic, the whole Bible floor to ceiling. Cathedral before 13:00, cloister after. Buy the <b>&euro;3.50 AMAT day ticket</b> &mdash; four buses today.</p>
+   <div class="dtime dcustom" data-dc-row="c_2026-10-26_1"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-26_1_what" placeholder="e.g. anything extra you add today" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-26_1_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><div class="dtime dcustom" data-dc-row="c_2026-10-26_2"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-26_2_what" placeholder="Anything else?" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-26_2_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><p>The right day for this, because everything else is shut on a Monday. <b>Capuchin Catacombs at 09:00</b> &mdash; 8,000 mummified Palermitans still in their clothes; it closes 12:30&ndash;15:00, so go first. Then walk to Piazza Indipendenza and take bus <b>389</b> up to <b>Monreale</b>: 6,500 m&sup2; of gold mosaic, the whole Bible floor to ceiling. Cathedral before 13:00, cloister after. Buy the <b>&euro;3.50 AMAT day ticket</b> &mdash; four buses today.</p>
   </div>
   <div class="day" data-date="2026-10-27">
    <div class="dhd"><span class="ddate">Tue 27 Oct</span><span class="dsleep">Favignana</span></div>
@@ -448,17 +453,17 @@
   <div class="day" data-date="2026-10-28">
    <div class="dhd"><span class="ddate">Wed 28 Oct</span><span class="dsleep">Favignana</span></div>
    <h4>Favignana by bike</h4>
-   <p>The island is flat and about 9 km end to end, so a bike is genuinely all you need. <b>Cala Rossa</b> and <b>Bue Marino</b> are old tuff quarries the sea has flooded &mdash; sheer cut-stone walls dropping straight into turquoise. <b>Cala Azzurra</b> and <b>Lido Burrone</b> for actual sand.</p>
+   <div class="dtime dcustom" data-dc-row="c_2026-10-28_1"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-28_1_what" placeholder="e.g. bike hire time" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-28_1_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><div class="dtime dcustom" data-dc-row="c_2026-10-28_2"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-28_2_what" placeholder="Anything else?" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-28_2_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><p>The island is flat and about 9 km end to end, so a bike is genuinely all you need. <b>Cala Rossa</b> and <b>Bue Marino</b> are old tuff quarries the sea has flooded &mdash; sheer cut-stone walls dropping straight into turquoise. <b>Cala Azzurra</b> and <b>Lido Burrone</b> for actual sand.</p>
   </div>
   <div class="day" data-date="2026-10-29">
    <div class="dhd"><span class="ddate">Thu 29 Oct</span><span class="dsleep">Favignana</span></div>
    <h4>Favignana</h4>
-   <p>The <b>Florio tuna cannery</b> tells the whole story of the island &mdash; this was one of the great tuna fisheries of the Mediterranean. Then the climb up to <b>Santa Caterina</b> fort for the view over both Favignana and Levanzo. Swim, eat tuna, do very little.</p>
+   <div class="dtime dcustom" data-dc-row="c_2026-10-29_1"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-29_1_what" placeholder="e.g. Florio museum time" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-29_1_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><div class="dtime dcustom" data-dc-row="c_2026-10-29_2"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-29_2_what" placeholder="Anything else?" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-29_2_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><p>The <b>Florio tuna cannery</b> tells the whole story of the island &mdash; this was one of the great tuna fisheries of the Mediterranean. Then the climb up to <b>Santa Caterina</b> fort for the view over both Favignana and Levanzo. Swim, eat tuna, do very little.</p>
   </div>
   <div class="day" data-date="2026-10-30">
    <div class="dhd"><span class="ddate">Fri 30 Oct</span><span class="dsleep">Favignana</span></div>
    <h4>Favignana &mdash; last full day</h4>
-   <p>A boat around the island if one is running, or the short hop to <b>Levanzo</b> and its prehistoric cave paintings. Otherwise cycle somewhere you have not been and swim off the rocks. Last proper day of the trip &mdash; spend it slowly.</p>
+   <div class="dtime dcustom" data-dc-row="c_2026-10-30_1"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-30_1_what" placeholder="e.g. Levanzo boat time" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-30_1_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><div class="dtime dcustom" data-dc-row="c_2026-10-30_2"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-30_2_what" placeholder="Anything else?" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-30_2_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><p>A boat around the island if one is running, or the short hop to <b>Levanzo</b> and its prehistoric cave paintings. Otherwise cycle somewhere you have not been and swim off the rocks. Last proper day of the trip &mdash; spend it slowly.</p>
   </div>
   <div class="day flag-warn" data-date="2026-10-31">
    <div class="dhd"><span class="ddate">Sat 31 Oct</span><span class="dsleep">Rome</span></div>
@@ -1919,6 +1924,39 @@
           },300);
         });
       })(inputs[i]);
+    }
+  })();
+
+
+  /* ---------- free-day custom bookings (what + when, two rows each) ---------- */
+  (function(){
+    var rows=document.querySelectorAll('#today .dcustom');
+    if(!rows.length) return;
+    function keyFor(el){ return 'trip_cf_'+el.getAttribute('data-cf'); }
+    function paint(row){
+      var ins=row.querySelectorAll('[data-cf]'), has=false;
+      for(var i=0;i<ins.length;i++){ if(ins[i].value.trim().length>0){ has=true; break; } }
+      row.classList.toggle('has-time', has);
+      var chk=row.querySelector('.dc-check');
+      if(chk) chk.textContent = has ? '✓' : '';
+    }
+    for(var r=0;r<rows.length;r++){
+      (function(row){
+        var ins=row.querySelectorAll('[data-cf]'), t;
+        for(var i=0;i<ins.length;i++){
+          (function(el){
+            try{ var v=localStorage.getItem(keyFor(el)); if(v!==null) el.value=v; }catch(e){}
+            el.addEventListener('input', function(){
+              paint(row);
+              clearTimeout(t);
+              t=setTimeout(function(){
+                try{ localStorage.setItem(keyFor(el), el.value); }catch(e){}
+              },300);
+            });
+          })(ins[i]);
+        }
+        paint(row);
+      })(rows[r]);
     }
   })();
 
