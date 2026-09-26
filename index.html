@@ -286,6 +286,20 @@
   .omap .ofaint{font-size:16px; font-style:italic; fill:var(--map-faint); stroke:var(--map-land); stroke-width:4; paint-order:stroke}
   .omap .oflylab{font-size:17px; font-weight:700; fill:var(--warn); stroke:var(--map-water); stroke-width:5; paint-order:stroke}
   .omap .oleg{font-size:16px; fill:var(--map-ink)}
+  /* booking checklist */
+  #bookprogress .pbhead{display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:9px}
+  .pbar{height:10px; border-radius:6px; background:var(--chip); overflow:hidden}
+  .pbar-fill{height:100%; width:0%; background:var(--good); border-radius:6px; transition:width .25s ease}
+  @media (prefers-reduced-motion: reduce){ .pbar-fill{transition:none} }
+  ul.bklist{list-style:none; margin:6px 0 0; padding:0}
+  ul.bklist li{border-bottom:1px solid var(--line)}
+  ul.bklist li:last-child{border-bottom:none}
+  ul.bklist li::before{content:none}
+  ul.bklist label{display:flex; align-items:flex-start; gap:11px; padding:10px 2px; cursor:pointer}
+  ul.bklist input[type="checkbox"]{
+    flex:none; width:22px; height:22px; margin-top:2px; accent-color:var(--good); cursor:pointer}
+  ul.bklist .bktext{flex:1; font-size:14.5px; line-height:1.55}
+  ul.bklist li.done .bktext{opacity:.5; text-decoration:line-through; text-decoration-color:var(--muted)}
   .foot{color:var(--muted); font-size:12.5px; margin-top:36px; border-top:1px solid var(--line); padding-top:14px}
   .big{font-size:19px; font-weight:700}
 </style>
@@ -500,21 +514,30 @@
 <section id="book">
   <h2 class="sect">What to book &amp; when</h2>
 
+  <div class="card" id="bookprogress">
+    <div class="pbhead">
+      <p class="big" style="margin:0">Booking progress</p>
+      <p class="lede" id="pbartext" style="margin:0">0 of 0 booked</p>
+    </div>
+    <div class="pbar"><div class="pbar-fill" id="pbarfill"></div></div>
+    <button class="wxbtn" id="resetchecklist" type="button" style="margin-top:10px">Reset checklist</button>
+  </div>
+
   <details open>
     <summary>🔴 Book NOW (late August)</summary>
     <div class="inner">
-      <ul class="tick">
-        <li><b>All hotels</b> — <b>Favignana first</b> (small island, few beds, and places start shutting for winter), then the <b>31 Oct Rome night</b> (All Saints' long weekend, rates jump 10–25%).</li>
-        <li><b>Vatican Museums</b> <span class="pr">€25</span> — <a class="btn" href="https://tickets.museivaticani.va/home" target="_blank" rel="noopener">Book official</a> Closed Sundays.</li>
-        <li><b>Borghese Gallery</b> <span class="pr">€18</span> — <a class="btn" href="https://galleriaborghese.it/en/visit/" target="_blank" rel="noopener">Book official</a> Timed slots, closed Mondays.</li>
-        <li><b>Rome→Naples train 16 Oct</b> <span class="pr">€9–19 now</span> — <a class="btn" href="https://www.trenitalia.com/en.html" target="_blank" rel="noopener">Trenitalia</a> <a class="btn" href="https://www.italotreno.com/en" target="_blank" rel="noopener">Italo</a> (later: €40–55).</li>
-        <li><b>Naples→Lamezia Terme train 19 Oct</b> <span class="pr">€20–45</span> — <a class="btn" href="https://www.trenitalia.com/en.html" target="_blank" rel="noopener">Trenitalia</a></li>
-        <li><b>Flight back to Rome, 31 Oct</b> <span class="pr">€25–90</span> — from <b>Trapani (TPS)</b> if there is a flight that suits, otherwise Palermo (PMO). <a class="btn" href="https://www.skyscanner.com.au" target="_blank" rel="noopener">Skyscanner</a> · <a href="https://www.ryanair.com/au/en" target="_blank" rel="noopener">Ryanair</a> · <a href="https://www.ita-airways.com/en_en" target="_blank" rel="noopener">ITA</a>. Book early — this is the tightest link in the trip.</li>
-        <li><b>🌋 Aeolian Islands day trip from Tropea</b> <span class="pr">€70</span> — <a class="btn" href="https://booking.tropea.biz/calendario-escursioni/" target="_blank" rel="noopener">Book direct</a> <b>Tue 20 or Wed 21 Oct</b> — the season ends on the 24th, so you are catching the last week. Stromboli's lava after dark. Needs minimum numbers to run, so book early.</li>
-        <li><b>Cappella Sansevero, Naples</b> <span class="pr">€10</span> — <a class="btn" href="https://www.museosansevero.it/en/online-tickets" target="_blank" rel="noopener">Book official</a> The Veiled Christ. Sells out fast.</li>
-        <li><b>Travel insurance</b> <span class="aud">A$350–700</span> — <a href="https://fastcover.com.au/destinations/europe-travel-insurance" target="_blank" rel="noopener">Fast Cover</a> · <a href="https://www.covermore.com.au" target="_blank" rel="noopener">Cover-More</a>.</li>
-        <li><b>eSIM</b> — <a class="btn" href="https://www.airalo.com/eurolink-esim" target="_blank" rel="noopener">Airalo Eurolink</a> ≈ <span class="aud">A$148</span>.</li>
-        <li><b>Cards</b> — <a href="https://up.com.au" target="_blank" rel="noopener">Up Bank</a> + <a href="https://wise.com/au/" target="_blank" rel="noopener">Wise</a>, 1–2 weeks to arrive.</li>
+      <ul class="tick bklist">
+        <li><label><input type="checkbox" data-bk="hotels"><span class="bktext"><b>All hotels</b> — <b>Favignana first</b> (small island, few beds, and places start shutting for winter), then the <b>31 Oct Rome night</b> (All Saints' long weekend, rates jump 10–25%).</span></label></li>
+        <li><label><input type="checkbox" data-bk="vatican"><span class="bktext"><b>Vatican Museums</b> <span class="pr">€25</span> — <a class="btn" href="https://tickets.museivaticani.va/home" target="_blank" rel="noopener">Book official</a> Closed Sundays.</span></label></li>
+        <li><label><input type="checkbox" data-bk="borghese"><span class="bktext"><b>Borghese Gallery</b> <span class="pr">€18</span> — <a class="btn" href="https://galleriaborghese.it/en/visit/" target="_blank" rel="noopener">Book official</a> Timed slots, closed Mondays.</span></label></li>
+        <li><label><input type="checkbox" data-bk="train_naples"><span class="bktext"><b>Rome→Naples train 16 Oct</b> <span class="pr">€9–19 now</span> — <a class="btn" href="https://www.trenitalia.com/en.html" target="_blank" rel="noopener">Trenitalia</a> <a class="btn" href="https://www.italotreno.com/en" target="_blank" rel="noopener">Italo</a> (later: €40–55).</span></label></li>
+        <li><label><input type="checkbox" data-bk="train_lamezia"><span class="bktext"><b>Naples→Lamezia Terme train 19 Oct</b> <span class="pr">€20–45</span> — <a class="btn" href="https://www.trenitalia.com/en.html" target="_blank" rel="noopener">Trenitalia</a></span></label></li>
+        <li><label><input type="checkbox" data-bk="flight_pmo_rome"><span class="bktext"><b>Flight back to Rome, 31 Oct</b> <span class="pr">€25–90</span> — from <b>Trapani (TPS)</b> if there is a flight that suits, otherwise Palermo (PMO). <a class="btn" href="https://www.skyscanner.com.au" target="_blank" rel="noopener">Skyscanner</a> · <a href="https://www.ryanair.com/au/en" target="_blank" rel="noopener">Ryanair</a> · <a href="https://www.ita-airways.com/en_en" target="_blank" rel="noopener">ITA</a>. Book early — this is the tightest link in the trip.</span></label></li>
+        <li><label><input type="checkbox" data-bk="aeolian"><span class="bktext"><b>🌋 Aeolian Islands day trip from Tropea</b> <span class="pr">€70</span> — <a class="btn" href="https://booking.tropea.biz/calendario-escursioni/" target="_blank" rel="noopener">Book direct</a> <b>Tue 20 or Wed 21 Oct</b> — the season ends on the 24th, so you are catching the last week. Stromboli's lava after dark. Needs minimum numbers to run, so book early.</span></label></li>
+        <li><label><input type="checkbox" data-bk="sansevero"><span class="bktext"><b>Cappella Sansevero, Naples</b> <span class="pr">€10</span> — <a class="btn" href="https://www.museosansevero.it/en/online-tickets" target="_blank" rel="noopener">Book official</a> The Veiled Christ. Sells out fast.</span></label></li>
+        <li><label><input type="checkbox" data-bk="insurance"><span class="bktext"><b>Travel insurance</b> <span class="aud">A$350–700</span> — <a href="https://fastcover.com.au/destinations/europe-travel-insurance" target="_blank" rel="noopener">Fast Cover</a> · <a href="https://www.covermore.com.au" target="_blank" rel="noopener">Cover-More</a>.</span></label></li>
+        <li><label><input type="checkbox" data-bk="esim"><span class="bktext"><b>eSIM</b> — <a class="btn" href="https://www.airalo.com/eurolink-esim" target="_blank" rel="noopener">Airalo Eurolink</a> ≈ <span class="aud">A$148</span>.</span></label></li>
+        <li><label><input type="checkbox" data-bk="cards"><span class="bktext"><b>Cards</b> — <a href="https://up.com.au" target="_blank" rel="noopener">Up Bank</a> + <a href="https://wise.com/au/" target="_blank" rel="noopener">Wise</a>, 1–2 weeks to arrive.</span></label></li>
       </ul>
     </div>
   </details>
@@ -522,11 +545,11 @@
   <details>
     <summary>🟠 September</summary>
     <div class="inner">
-      <ul class="tick">
-        <li><b>⏰ Colosseum — alarm for 12 Sept, 9:00am Italy (5pm AEST)</b> <span class="pr">€18</span> — <a class="btn" href="https://ticketing.colosseo.it/en/" target="_blank" rel="noopener">Book official</a> Releases exactly 30 days ahead; morning slots gone within hours. Want the underground? You need the <b>€32 official guided visit</b> — the plain ticket won't get you down there.</li>
-        <li><b>Pompeii</b> <span class="pr">€20</span> — <a class="btn" href="https://pompeiisites.org/en/" target="_blank" rel="noopener">Book official</a> Named ticket, must match your passport. Book a 9am slot for 17 Oct.</li>
-        <li><b>Any tours you want</b> — food tours, cooking classes and boat trips fill up; see each stop's "Experiences" list.</li>
-        <li><b>Palazzo Colonna</b> (if you want it) — opens <b>Fri &amp; Sat mornings only</b>; your only chances are 16 Oct, 30 Oct or 31 Oct.</li>
+      <ul class="tick bklist">
+        <li><label><input type="checkbox" data-bk="colosseum"><span class="bktext"><b>⏰ Colosseum — alarm for 12 Sept, 9:00am Italy (5pm AEST)</b> <span class="pr">€18</span> — <a class="btn" href="https://ticketing.colosseo.it/en/" target="_blank" rel="noopener">Book official</a> Releases exactly 30 days ahead; morning slots gone within hours. Want the underground? You need the <b>€32 official guided visit</b> — the plain ticket won't get you down there.</span></label></li>
+        <li><label><input type="checkbox" data-bk="pompeii"><span class="bktext"><b>Pompeii</b> <span class="pr">€20</span> — <a class="btn" href="https://pompeiisites.org/en/" target="_blank" rel="noopener">Book official</a> Named ticket, must match your passport. Book a 9am slot for 17 Oct.</span></label></li>
+        <li><label><input type="checkbox" data-bk="tours"><span class="bktext"><b>Any tours you want</b> — food tours, cooking classes and boat trips fill up; see each stop's "Experiences" list.</span></label></li>
+        <li><label><input type="checkbox" data-bk="colonna"><span class="bktext"><b>Palazzo Colonna</b> (if you want it) — opens <b>Fri &amp; Sat mornings only</b>; your only chances are 16 Oct, 30 Oct or 31 Oct.</span></label></li>
       </ul>
     </div>
   </details>
@@ -534,11 +557,11 @@
   <details>
     <summary>🟡 1–2 weeks before each leg</summary>
     <div class="inner">
-      <ul class="tick">
-        <li><b>Trapani &rarr; Favignana hydrofoil</b> (27 Oct) and back (31 Oct) &mdash; <a class="btn" href="https://www.libertylines.it" target="_blank" rel="noopener">Liberty Lines</a> <b>Liberty Lines had not published its autumn timetable when this was researched</b>, so the low-season times in this guide are indicative. Check the official page in early October, before you fix a flight time for the 31st.</li>
-        <li><b>Ring ahead about two Favignana sights</b> &mdash; the <b>Florio tuna museum</b>&rsquo;s autumn hours are not published (+39 338 536 5899), and the <b>Grotta del Genovese</b> on Levanzo publishes no season at all and needs 48 hours&rsquo; notice (+39 331 133 0259, WhatsApp works). They are two of the three best things to do out there, so it is worth the two calls.</li>
-        <li><b>Re-verify IC 723</b> (Villa San Giovanni ~14:25 → Cefalù 18:24) on <a href="https://www.trenitalia.com/en.html" target="_blank" rel="noopener">Trenitalia</a>.</li>
-        <li>Message each hotel to confirm check-in and that they're open.</li>
+      <ul class="tick bklist">
+        <li><label><input type="checkbox" data-bk="hydrofoil_favignana"><span class="bktext"><b>Trapani &rarr; Favignana hydrofoil</b> (27 Oct) and back (31 Oct) &mdash; <a class="btn" href="https://www.libertylines.it" target="_blank" rel="noopener">Liberty Lines</a> <b>Liberty Lines had not published its autumn timetable when this was researched</b>, so the low-season times in this guide are indicative. Check the official page in early October, before you fix a flight time for the 31st.</span></label></li>
+        <li><label><input type="checkbox" data-bk="ring_favignana"><span class="bktext"><b>Ring ahead about two Favignana sights</b> &mdash; the <b>Florio tuna museum</b>&rsquo;s autumn hours are not published (+39 338 536 5899), and the <b>Grotta del Genovese</b> on Levanzo publishes no season at all and needs 48 hours&rsquo; notice (+39 331 133 0259, WhatsApp works). They are two of the three best things to do out there, so it is worth the two calls.</span></label></li>
+        <li><label><input type="checkbox" data-bk="verify_ic723"><span class="bktext"><b>Re-verify IC 723</b> (Villa San Giovanni ~14:25 → Cefalù 18:24) on <a href="https://www.trenitalia.com/en.html" target="_blank" rel="noopener">Trenitalia</a>.</span></label></li>
+        <li><label><input type="checkbox" data-bk="confirm_hotels"><span class="bktext">Message each hotel to confirm check-in and that they're open.</span></label></li>
       </ul>
     </div>
   </details>
@@ -1820,6 +1843,45 @@
       line.textContent='Trip complete';
       sub.textContent='Hope it was a good one.';
     }
+  })();
+
+
+  /* ---------- booking checklist ---------- */
+  (function(){
+    var boxes=document.querySelectorAll('#book [data-bk]');
+    if(!boxes.length) return;
+    var fill=document.getElementById('pbarfill'), text=document.getElementById('pbartext');
+    function key(b){ return 'trip_bk_'+b.getAttribute('data-bk'); }
+    function refresh(){
+      var done=0;
+      for(var i=0;i<boxes.length;i++){
+        var b=boxes[i], li=b.closest('li');
+        if(li) li.classList.toggle('done', b.checked);
+        if(b.checked) done++;
+      }
+      var pct = boxes.length ? Math.round(done/boxes.length*100) : 0;
+      if(fill) fill.style.width = pct+'%';
+      if(text) text.textContent = done+' of '+boxes.length+' booked';
+    }
+    for(var i=0;i<boxes.length;i++){
+      (function(b){
+        try{ if(localStorage.getItem(key(b))==='1') b.checked=true; }catch(e){}
+        b.addEventListener('change', function(){
+          try{ localStorage.setItem(key(b), b.checked?'1':'0'); }catch(e){}
+          refresh();
+        });
+      })(boxes[i]);
+    }
+    var reset=document.getElementById('resetchecklist');
+    if(reset) reset.addEventListener('click', function(){
+      if(!window.confirm('Uncheck everything on the booking checklist?')) return;
+      for(var i=0;i<boxes.length;i++){
+        boxes[i].checked=false;
+        try{ localStorage.removeItem(key(boxes[i])); }catch(e){}
+      }
+      refresh();
+    });
+    refresh();
   })();
 
   /* ---------- my bookings: save to this device ---------- */
