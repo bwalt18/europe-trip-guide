@@ -316,6 +316,18 @@
   .dc-check{flex:none; width:13px; color:var(--good); font-weight:800; font-size:14px; text-align:center}
   .dtime.dcustom .dcw{flex:1; min-width:0; width:auto; text-align:left; font-weight:600}
   .dtime.dcustom .dcwhen{flex:none; width:62px}
+  /* per-day "change of plan" note */
+  .dnote{margin-top:8px}
+  .dnote-toggle{display:inline-flex; align-items:center; gap:4px; background:none; border:none; padding:4px 2px;
+    color:var(--sea); font:inherit; font-weight:700; font-size:12.5px; cursor:pointer}
+  .dnote.has-note .dnote-toggle{color:var(--warn)}
+  .dnote.has-note .dnote-toggle::after{content:"\25CF"; font-size:8px; margin-left:3px}
+  .dnote-text{display:none; width:100%; box-sizing:border-box; margin-top:6px; padding:8px 10px;
+    border:1.5px dashed var(--line); border-radius:9px; background:var(--chip); color:var(--ink);
+    font:inherit; font-size:13.5px; line-height:1.4; resize:vertical; min-height:50px}
+  .dnote.open .dnote-text{display:block}
+  .dnote.has-note .dnote-text{border-style:solid; border-color:var(--warn); background:var(--warn-soft)}
+  .dnote-text:focus{outline:2px solid var(--sea); border-color:var(--sea)}
   .foot{color:var(--muted); font-size:12.5px; margin-top:36px; border-top:1px solid var(--line); padding-top:14px}
   .big{font-size:19px; font-weight:700}
 </style>
@@ -364,7 +376,7 @@
 <!-- ============ DAY BY DAY ============ -->
 <section id="today">
   <h2 class="sect">Day by day</h2>
-  <p class="lede" style="margin:2px 0 12px">Some days have a dashed box for the actual time you booked — fill it in once you have it, and it turns green and stays saved on this phone. On the open days, type in whatever you end up booking and it does the same.</p>
+  <p class="lede" style="margin:2px 0 12px">Some days have a dashed box for the actual time you booked — fill it in once you have it, and it turns green and stays saved on this phone. On the open days, type in whatever you end up booking and it does the same. Plans change too — every day has a “✏️ Change of plan?” box if you end up doing something different.</p>
   <div class="card" id="todaycard">
     <p class="big" id="todayline" style="margin:0 0 2px">Loading&hellip;</p>
     <p class="lede" id="todaysub" style="margin:0"></p>
@@ -374,107 +386,107 @@
    <div class="dhd"><span class="ddate">Mon 12 Oct</span><span class="dsleep">Rome</span></div>
    <h4>Land in Rome</h4>
    <p>Leonardo Express from FCO (<b>&euro;14</b>, 32 min) to Termini. Drop bags, then walk &mdash; don&rsquo;t nap. Aperitivo in Monti, early night. <b>Borghese is shut Mondays</b>, so don&rsquo;t plan it today.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-12"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-12" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-13">
    <div class="dhd"><span class="ddate">Tue 13 Oct</span><span class="dsleep">Rome</span></div>
    <h4>Ancient Rome</h4>
    <div class="dtime" data-dt-row="colosseum"><label for="dt_colosseum">🎫 Colosseum entry</label><input type="text" inputmode="numeric" id="dt_colosseum" data-dt="colosseum" placeholder="e.g. 09:15" autocomplete="off"></div><p><b>Colosseum</b> on your booked slot (go 8:30), then the <b>Forum</b> and up <b>Palatine Hill</b> &mdash; same ticket, 24 hours. Lunch at Supplizio. Afternoon: San Clemente&rsquo;s three stacked churches. Evening: <b>Trevi after 10pm</b>, free and half empty.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-13"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-13" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day flag-info" data-date="2026-10-14">
    <div class="dhd"><span class="ddate">Wed 14 Oct</span><span class="dsleep">Rome</span></div>
    <h4>The Vatican</h4>
    <div class="dtime" data-dt-row="vatican"><label for="dt_vatican">🎫 Vatican Museums entry</label><input type="text" inputmode="numeric" id="dt_vatican" data-dt="vatican" placeholder="e.g. 08:15" autocomplete="off"></div><p>Museums early on your booked slot, finish at the Sistine Chapel, then St Peter&rsquo;s. Lunch at Pizzarium, five minutes from the exit. <b>Heads up:</b> Wednesday is the papal audience &mdash; St Peter&rsquo;s Square is closed off much of the morning. Museums first, Basilica after 1pm.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-14"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-14" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-15">
    <div class="dhd"><span class="ddate">Thu 15 Oct</span><span class="dsleep">Rome</span></div>
    <h4>Baroque and Caravaggio</h4>
    <div class="dtime" data-dt-row="borghese"><label for="dt_borghese">🎫 Borghese Gallery slot</label><input type="text" inputmode="numeric" id="dt_borghese" data-dt="borghese" placeholder="e.g. 11:00" autocomplete="off"></div><p><b>Borghese Gallery</b> on your timed slot &mdash; Bernini&rsquo;s sculptures, the best two hours in Rome. Walk back through the gardens. Afternoon: Pantheon, San Luigi dei Francesi for the Caravaggios (<b>shut 12:45&ndash;14:30</b>), Santa Maria sopra Minerva. Dinner in Trastevere.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-15"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-15" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-16">
    <div class="dhd"><span class="ddate">Fri 16 Oct</span><span class="dsleep">Sorrento</span></div>
    <h4>Rome to Sorrento</h4>
    <div class="dtime" data-dt-row="train_naples"><label for="dt_train_naples">🚆 Train to Naples</label><input type="text" inputmode="numeric" id="dt_train_naples" data-dt="train_naples" placeholder="e.g. 09:35" autocomplete="off"></div><p>Morning train to Naples (1h10, pre-booked), then <b>Campania Express</b> to Sorrento (&euro;15, seat and luggage space). Afternoon: settle in, down to Marina Grande, sunset from the Villa Comunale gardens.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-16"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-16" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-17">
    <div class="dhd"><span class="ddate">Sat 17 Oct</span><span class="dsleep">Sorrento</span></div>
    <h4>Pompeii</h4>
    <div class="dtime" data-dt-row="pompeii"><label for="dt_pompeii">🎫 Pompeii entry</label><input type="text" inputmode="numeric" id="dt_pompeii" data-dt="pompeii" placeholder="e.g. 09:00" autocomplete="off"></div><p>Early train to <b>Pompei Scavi</b> (~30 min, station 100 m from the gate). Your 9am slot &mdash; <b>carry your passport</b>, the ticket is named. Allow 4&ndash;6 hours; it is a whole city with almost no shade. Back for a late lunch and a swim if the sun holds.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-17"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-17" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day flag-go" data-date="2026-10-18">
    <div class="dhd"><span class="ddate">Sun 18 Oct</span><span class="dsleep">Sorrento</span></div>
    <h4>Your extra Sorrento day</h4>
    <div class="dtime dcustom" data-dc-row="c_2026-10-18_1"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-18_1_what" placeholder="e.g. Herculaneum, Vesuvius or Naples" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-18_1_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><div class="dtime dcustom" data-dc-row="c_2026-10-18_2"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-18_2_what" placeholder="Anything else booked today?" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-18_2_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><p>The day the longer stay buys you. Pick one: <b>Herculaneum</b> (&euro;16 &mdash; smaller than Pompeii but far better preserved, wooden doors and upper floors still standing), <b>Vesuvius</b> to walk the crater rim (&euro;10 + bus), or <b>Naples</b> for the Veiled Christ, Caravaggio at Pio Monte, and pizza at Da Michele. Or do none of it and take the boat along the coast.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-18"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-18" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-19">
    <div class="dhd"><span class="ddate">Mon 19 Oct</span><span class="dsleep">Tropea</span></div>
    <h4>Sorrento to Tropea</h4>
    <div class="dtime" data-dt-row="train_tropea"><label for="dt_train_tropea">🚆 Train towards Tropea</label><input type="text" inputmode="numeric" id="dt_train_tropea" data-dt="train_tropea" placeholder="e.g. 08:20" autocomplete="off"></div><p>A long one, ~6&ndash;7 h. Circumvesuviana to Naples, then train to Lamezia Terme, then the regional down to Tropea. Book the Naples&ndash;Lamezia leg early &mdash; it is &euro;20&ndash;45 in advance and much more on the day. Eat properly before the last leg.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-19"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-19" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day flag-go" data-date="2026-10-20">
    <div class="dhd"><span class="ddate">Tue 20 Oct</span><span class="dsleep">Tropea</span></div>
    <h4>The Aeolian Islands &mdash; Stromboli</h4>
    <div class="dtime" data-dt-row="aeolian1"><label for="dt_aeolian1">⛴ Aeolian boat, Tropea port</label><input type="text" inputmode="numeric" id="dt_aeolian1" data-dt="aeolian1" placeholder="e.g. 14:00" autocomplete="off"></div><p><b>Book this before anything else.</b> Leaves Tropea 14:00, back ~22:30: three and a half hours ashore on Stromboli, then after dark the boat rounds the Sciara del Fuoco to watch lava run into the sea. <b>&euro;70</b> direct at tropea.biz. The season ends 24 October, so this is one of the last sailings. Take a jacket.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-20"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-20" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-21">
    <div class="dhd"><span class="ddate">Wed 21 Oct</span><span class="dsleep">Tropea</span></div>
    <h4>Tropea</h4>
    <div class="dtime" data-dt-row="aeolian2"><label for="dt_aeolian2">⛴ Aeolian boat (if moved here)</label><input type="text" inputmode="numeric" id="dt_aeolian2" data-dt="aeolian2" placeholder="leave blank if not needed" autocomplete="off"></div><p>Slow day. Santa Maria dell&rsquo;Isola late afternoon when the light is good (church free, rooftop &euro;3). The belvederes along Corso Vittorio Emanuele. White-sand beaches, free and empty, sea still ~22&deg;C. Gelato at Tonino &mdash; the Tropea red onion flavour is not a joke. <i>(If the boat did not run yesterday, today is your second chance.)</i></p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-21"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-21" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-22">
    <div class="dhd"><span class="ddate">Thu 22 Oct</span><span class="dsleep">Cefal&ugrave;</span></div>
    <h4>Tropea to Cefal&ugrave; &mdash; your train rides a ferry</h4>
    <div class="dtime" data-dt-row="ic723"><label for="dt_ic723">🚆 InterCity 723, Villa S.G.</label><input type="text" inputmode="numeric" id="dt_ic723" data-dt="ic723" placeholder="e.g. 14:25" autocomplete="off"></div><p>Regional to Villa San Giovanni, then <b>InterCity 723</b> (~14:25): the carriages are loaded onto a ferry and you cross the Strait of Messina by sea. Stay in your seat or go up on deck and watch Sicily arrive. Cefal&ugrave; 18:24, so it is dark when you land &mdash; drop the bag and go straight to dinner. Book La Brace ahead.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-22"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-22" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-23">
    <div class="dhd"><span class="ddate">Fri 23 Oct</span><span class="dsleep">Palermo</span></div>
    <h4>Cefal&ugrave;, then on to Palermo</h4>
    <div class="dtime" data-dt-row="train_palermo"><label for="dt_train_palermo">🚆 Train to Palermo</label><input type="text" inputmode="numeric" id="dt_train_palermo" data-dt="train_palermo" placeholder="e.g. 09:10" autocomplete="off"></div><p><b>La Rocca first thing</b> &mdash; 45&ndash;60 min of steps, closed shoes required, and the whole coast from the top. Then the Duomo&rsquo;s Pantocrator mosaic and the medieval washhouse. The <b>&euro;10 SIBAC pass</b> covers the rock, the museum and three more. Lunch, a last swim off the town beach, then the evening train to Palermo (~1 h, &euro;7.50).</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-23"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-23" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-24">
    <div class="dhd"><span class="ddate">Sat 24 Oct</span><span class="dsleep">Palermo</span></div>
    <h4>Palermo proper</h4>
    <div class="dtime dcustom" data-dc-row="c_2026-10-24_1"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-24_1_what" placeholder="e.g. Palazzo Abatellis, dinner booking" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-24_1_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><div class="dtime dcustom" data-dc-row="c_2026-10-24_2"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-24_2_what" placeholder="Anything else?" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-24_2_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><p><b>La Martorana first</b> (&euro;2, mornings only, and shut Mondays &mdash; so it has to be today). The best mosaics-per-euro in Sicily; San Cataldo next door. Then <b>Cappella Palatina</b> (&euro;19, last entry 15:45) and the Cathedral rooftops. Afternoon: Palazzo Abatellis or Palazzo Butera in the Kalsa, both shut tomorrow&rsquo;s alternative day. Street food all the way through: panelle, sfincione, arancine.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-24"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-24" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day flag-go" data-date="2026-10-25">
    <div class="dhd"><span class="ddate">Sun 25 Oct</span><span class="dsleep">Palermo</span></div>
    <h4>Mondello, and Rigoletto</h4>
    <div class="dtime" data-dt-row="rigoletto"><label for="dt_rigoletto">🎭 Rigoletto, Teatro Massimo</label><input type="text" inputmode="numeric" id="dt_rigoletto" data-dt="rigoletto" placeholder="e.g. 20:00" autocomplete="off"></div><p><b>Clocks went back overnight</b> &mdash; an hour in hand, but dark by six from now on. Sunday is Palermo&rsquo;s worst day for monuments, so go to the sea instead. Bus <b>812</b> up Monte Pellegrino for the view, then <b>806</b> out to <b>Mondello</b>: a curve of white sand under the mountain with a Liberty-style pavilion on stilts. Sea is ~22&deg;C. <b>Then the night of the trip:</b> Verdi&rsquo;s Rigoletto at the Teatro Massimo, with Ludovic T&eacute;zier in the title role. Seats from &euro;27.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-25"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-25" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-26">
    <div class="dhd"><span class="ddate">Mon 26 Oct</span><span class="dsleep">Palermo</span></div>
    <h4>Monreale and the Catacombs</h4>
    <div class="dtime dcustom" data-dc-row="c_2026-10-26_1"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-26_1_what" placeholder="e.g. anything extra you add today" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-26_1_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><div class="dtime dcustom" data-dc-row="c_2026-10-26_2"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-26_2_what" placeholder="Anything else?" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-26_2_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><p>The right day for this, because everything else is shut on a Monday. <b>Capuchin Catacombs at 09:00</b> &mdash; 8,000 mummified Palermitans still in their clothes; it closes 12:30&ndash;15:00, so go first. Then walk to Piazza Indipendenza and take bus <b>389</b> up to <b>Monreale</b>: 6,500 m&sup2; of gold mosaic, the whole Bible floor to ceiling. Cathedral before 13:00, cloister after. Buy the <b>&euro;3.50 AMAT day ticket</b> &mdash; four buses today.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-26"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-26" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-27">
    <div class="dhd"><span class="ddate">Tue 27 Oct</span><span class="dsleep">Favignana</span></div>
    <h4>Palermo to Favignana</h4>
    <div class="dtime" data-dt-row="coach_trapani"><label for="dt_coach_trapani">🚌 Coach Palermo→Trapani</label><input type="text" inputmode="numeric" id="dt_coach_trapani" data-dt="coach_trapani" placeholder="e.g. 08:00" autocomplete="off"></div><div class="dtime" data-dt-row="hydrofoil_out"><label for="dt_hydrofoil_out">⛴ Hydrofoil Trapani→Favignana</label><input type="text" inputmode="numeric" id="dt_hydrofoil_out" data-dt="hydrofoil_out" placeholder="e.g. 10:30" autocomplete="off"></div><p><b>Segesta bus</b> to Trapani (&euro;9.60, 2 h) from Piazzetta Cairoli right behind Palermo Centrale &mdash; not the train, that line has been shut since 2013 and the detour takes five hours. The bus drops you at Trapani <b>port</b>, which is where the hydrofoils go from. Then ~30 minutes across to <b>Favignana</b>. Hire a bike when you land.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-27"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-27" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-28">
    <div class="dhd"><span class="ddate">Wed 28 Oct</span><span class="dsleep">Favignana</span></div>
    <h4>Favignana by bike</h4>
    <div class="dtime dcustom" data-dc-row="c_2026-10-28_1"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-28_1_what" placeholder="e.g. bike hire time" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-28_1_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><div class="dtime dcustom" data-dc-row="c_2026-10-28_2"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-28_2_what" placeholder="Anything else?" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-28_2_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><p>The island is flat and about 9 km end to end, so a bike is genuinely all you need. <b>Cala Rossa</b> and <b>Bue Marino</b> are old tuff quarries the sea has flooded &mdash; sheer cut-stone walls dropping straight into turquoise. <b>Cala Azzurra</b> and <b>Lido Burrone</b> for actual sand.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-28"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-28" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-29">
    <div class="dhd"><span class="ddate">Thu 29 Oct</span><span class="dsleep">Favignana</span></div>
    <h4>Favignana</h4>
    <div class="dtime dcustom" data-dc-row="c_2026-10-29_1"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-29_1_what" placeholder="e.g. Florio museum time" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-29_1_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><div class="dtime dcustom" data-dc-row="c_2026-10-29_2"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-29_2_what" placeholder="Anything else?" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-29_2_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><p>The <b>Florio tuna cannery</b> tells the whole story of the island &mdash; this was one of the great tuna fisheries of the Mediterranean. Then the climb up to <b>Santa Caterina</b> fort for the view over both Favignana and Levanzo. Swim, eat tuna, do very little.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-29"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-29" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day" data-date="2026-10-30">
    <div class="dhd"><span class="ddate">Fri 30 Oct</span><span class="dsleep">Favignana</span></div>
    <h4>Favignana &mdash; last full day</h4>
    <div class="dtime dcustom" data-dc-row="c_2026-10-30_1"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-30_1_what" placeholder="e.g. Levanzo boat time" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-30_1_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><div class="dtime dcustom" data-dc-row="c_2026-10-30_2"><span class="dc-check" aria-hidden="true"></span><input type="text" class="dcw" data-cf="c_2026-10-30_2_what" placeholder="Anything else?" autocomplete="off"><input type="text" class="dcwhen" data-cf="c_2026-10-30_2_when" placeholder="Time" inputmode="numeric" autocomplete="off"></div><p>A boat around the island if one is running, or the short hop to <b>Levanzo</b> and its prehistoric cave paintings. Otherwise cycle somewhere you have not been and swim off the rocks. Last proper day of the trip &mdash; spend it slowly.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-30"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-30" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day flag-warn" data-date="2026-10-31">
    <div class="dhd"><span class="ddate">Sat 31 Oct</span><span class="dsleep">Rome</span></div>
    <h4>Favignana to Rome</h4>
    <div class="dtime" data-dt-row="hydrofoil_back"><label for="dt_hydrofoil_back">⛴ Hydrofoil Favignana→Trapani</label><input type="text" inputmode="numeric" id="dt_hydrofoil_back" data-dt="hydrofoil_back" placeholder="e.g. 08:30" autocomplete="off"></div><div class="dtime" data-dt-row="coach_airport"><label for="dt_coach_airport">🚌 Coach Trapani→Palermo airport</label><input type="text" inputmode="numeric" id="dt_coach_airport" data-dt="coach_airport" placeholder="e.g. 10:00" autocomplete="off"></div><p>Ferry back to Trapani, then on to Rome. <b>Take a morning sailing</b>, not the last one &mdash; this is the leg with the most moving parts and it is the day before you fly home. Evening in Rome: last carbonara, and repack.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-10-31"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-10-31" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   <div class="day flag-info" data-date="2026-11-01">
    <div class="dhd"><span class="ddate">Sun 1 Nov</span><span class="dsleep">&rarr; home</span></div>
    <h4>Fly home</h4>
    <div class="dtime" data-dt-row="flight_home"><label for="dt_flight_home">✈ Flight home, departs</label><input type="text" inputmode="numeric" id="dt_flight_home" data-dt="flight_home" placeholder="e.g. 11:00" autocomplete="off"></div><p><b>All Saints&rsquo; Day.</b> The Vatican is closed, but state museums including the Colosseum are <b>free</b> this morning if you have hours to spare &mdash; crowded, though. Leonardo Express to FCO (&euro;14, every 15 min); allow three hours. Sunday timetable, so leave a little extra.</p>
-  </div>
+  <div class="dnote" data-dnote="2026-11-01"><button type="button" class="dnote-toggle" aria-expanded="false">✏️ Change of plan?</button><textarea class="dnote-text" data-note="2026-11-01" rows="2" placeholder="e.g. skipping this, swapping for something else, pushing to tomorrow…" autocomplete="off"></textarea></div></div>
   </div>
   <p class="lede" style="margin-top:12px">Every stop has its own section with the bookings, hotels and food &mdash; tap &#9776; to jump there.</p>
 </section>
@@ -1957,6 +1969,35 @@
         }
         paint(row);
       })(rows[r]);
+    }
+  })();
+
+
+  /* ---------- per-day "change of plan" notes ---------- */
+  (function(){
+    var wraps=document.querySelectorAll('#today .dnote');
+    if(!wraps.length) return;
+    for(var i=0;i<wraps.length;i++){
+      (function(wrap){
+        var btn=wrap.querySelector('.dnote-toggle');
+        var ta=wrap.querySelector('.dnote-text');
+        var key='trip_note_'+wrap.getAttribute('data-dnote');
+        function paint(){ wrap.classList.toggle('has-note', ta.value.trim().length>0); }
+        try{ var v=localStorage.getItem(key); if(v){ ta.value=v; wrap.classList.add('open'); } }catch(e){}
+        paint();
+        btn.addEventListener('click', function(){
+          wrap.classList.toggle('open');
+          if(wrap.classList.contains('open')) ta.focus();
+        });
+        var t;
+        ta.addEventListener('input', function(){
+          paint();
+          clearTimeout(t);
+          t=setTimeout(function(){
+            try{ localStorage.setItem(key, ta.value); }catch(e){}
+          },300);
+        });
+      })(wraps[i]);
     }
   })();
 
